@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyTeeth", "HealthyTeeth\HealthyTeeth.csproj", "{C6D3E101-8F26-40D2-B5EF-31F068065FF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyTeethAPI", "HealthyTeethAPI\HealthyTeethAPI.csproj", "{F13EFC68-A38B-45FD-8EE4-72FDE278D891}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6D3E101-8F26-40D2-B5EF-31F068065FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6D3E101-8F26-40D2-B5EF-31F068065FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6D3E101-8F26-40D2-B5EF-31F068065FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6D3E101-8F26-40D2-B5EF-31F068065FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49ED545F-F6A2-4C9D-AFB2-9A3926703BC0}
+	EndGlobalSection
+EndGlobal
