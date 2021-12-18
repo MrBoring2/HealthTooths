@@ -20,7 +20,11 @@ namespace HealthyTeethAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Employees
+
+        /// <summary>
+        /// GET запрос на получение всех сотрудников
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
@@ -36,7 +40,10 @@ namespace HealthyTeethAPI.Controllers
             return employees;
         }
 
-        // GET: api/Employees/5
+        /// <summary>
+        /// GET запрос на получение определённого сотрудника
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
@@ -50,8 +57,10 @@ namespace HealthyTeethAPI.Controllers
             return employee;
         }
 
-        // PUT: api/Employees/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// PUT запрос на редактирование сотрудника
+        /// </summary>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
@@ -81,8 +90,10 @@ namespace HealthyTeethAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Employees
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST запрос на добавление сотрудника
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
@@ -92,7 +103,10 @@ namespace HealthyTeethAPI.Controllers
             return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
         }
 
-        // DELETE: api/Employees/5
+        /// <summary>
+        /// DELETE запрос на удаление сотрудника
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
@@ -108,6 +122,11 @@ namespace HealthyTeethAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Проверка, если ли данный сотрудник в базе
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.EmployeeId == id);

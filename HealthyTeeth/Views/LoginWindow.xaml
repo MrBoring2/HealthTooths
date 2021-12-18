@@ -7,10 +7,11 @@
         xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         mc:Ignorable="d" Icon="/HealthyTeeth;component/Resources/logo.ico"
-        
-        Title="Здоровый зуб | Авторизация" Height="550" Width="500">
+        WindowStartupLocation="CenterScreen"
+        Title="Здоровые зубы | Авторизация" Height="550" Width="500">
     <Grid Background="LightBlue">
-
+        <mde:BusyOverlay IsBusy="{Binding Path=IsBusy}" 
+                         Progress="{Binding Path=Progress}"/>
         <material:Card Margin="50,50">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel>
@@ -25,11 +26,11 @@
                     <Border Margin="0,5,0,0" BorderThickness="1" BorderBrush="LightBlue" CornerRadius="5">
                         <StackPanel Orientation="Horizontal">
                             <material:PackIcon Kind="PasswordOutline" Width="50" Height="50"/>
-                            <TextBox FontSize="20" Text="{Binding Password}" HorizontalAlignment="Left" VerticalAlignment="Center" material:HintAssist.Hint="Пароль" Margin="5" Width="250"/>
+                            <PasswordBox x:Name="passwordText" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" material:HintAssist.Hint="Пароль" Margin="5" Width="250"/>
                         </StackPanel>
                     </Border>
 
-                    <Button Content="Войти" Foreground="White" Margin="0,15,0,50" Click="Button_Click"/>
+                    <Button x:Name="LoginButton" Content="Войти" Foreground="White" IsEnabled="{Binding IsLoginEnabled}" Margin="0,15,0,50" Click="LoginButton_Click"/>
                 </StackPanel>
             </StackPanel>
 

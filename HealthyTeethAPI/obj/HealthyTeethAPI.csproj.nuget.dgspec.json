@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MrBoring\\source\\repos\\HealthyTeethProgramm\\HealthyTeethAPI\\HealthyTeethAPI.csproj": {}
+    "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\HealthyTeethAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MrBoring\\source\\repos\\HealthyTeethProgramm\\HealthyTeethAPI\\HealthyTeethAPI.csproj": {
+    "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\HealthyTeethAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MrBoring\\source\\repos\\HealthyTeethProgramm\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
+        "projectUniqueName": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
         "projectName": "HealthyTeethAPI",
-        "projectPath": "C:\\Users\\MrBoring\\source\\repos\\HealthyTeethProgramm\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
+        "projectPath": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
         "packagesPath": "C:\\Users\\MrBoring\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MrBoring\\source\\repos\\HealthyTeethProgramm\\HealthyTeethAPI\\obj\\",
+        "outputPath": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

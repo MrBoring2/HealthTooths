@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JlgpxnJ8tzZgE1tkwZuSAf1ic8NuNFPPlzdyi+WCuq4/fEHCAx008wei+FuCAYqUKDYAiHpaUf1DRxwMPATj1Q==",
+  "dgSpecHash": "r0GiseFHWgxzuKSiO7XUUMOQZgiL79FUp4YSoA2VhPaf1lAKhxOP7EwhBY3OquviB5EFuutHpxtPsKDhMlIniA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MrBoring\\source\\repos\\HealthyTeethProgramm\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
+  "projectFilePath": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MrBoring\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\MrBoring\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\5.0.13\\microsoft.aspnetcore.connections.abstractions.5.0.13.nupkg.sha512",

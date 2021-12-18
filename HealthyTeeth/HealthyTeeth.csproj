@@ -200,14 +200,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\SortParameter.cs" />
     <Compile Include="POCO_Classes\Accountant.cs" />
     <Compile Include="POCO_Classes\Administrator.cs" />
+    <Compile Include="POCO_Classes\BaseModel.cs" />
     <Compile Include="POCO_Classes\Cabinet.cs" />
+    <Compile Include="POCO_Classes\Client.cs" />
     <Compile Include="POCO_Classes\Doctor.cs" />
     <Compile Include="POCO_Classes\Employee.cs" />
     <Compile Include="POCO_Classes\ModelStateException.cs" />
+    <Compile Include="POCO_Classes\Record.cs" />
     <Compile Include="POCO_Classes\Role.cs" />
     <Compile Include="Services\APIService.cs" />
+    <Compile Include="Services\Paginator.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Views\AccountantWindow.xaml.cs">
       <DependentUpon>AccountantWindow.xaml</DependentUpon>
@@ -216,6 +221,9 @@
       <DependentUpon>AdministratorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BaseWindow.cs" />
+    <Compile Include="Views\CustomMessageBox.xaml.cs">
+      <DependentUpon>CustomMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DoctorWindow.xaml.cs">
       <DependentUpon>DoctorWindow.xaml</DependentUpon>
     </Compile>
@@ -226,11 +234,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\Templates\RecordsTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AccountantWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AdministratorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -270,14 +286,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\empty.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.3.0\build\MaterialDesignThemes.targets')" />

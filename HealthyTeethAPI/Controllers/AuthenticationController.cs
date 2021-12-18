@@ -20,40 +20,24 @@ namespace HealthyTeethAPI.Controllers
         public AuthenticationController(HealphyTeethContext context)
         {
             _context = context;
-        }
-        // POST api/<AuthenticationController>
-        [HttpPost("loginClient")]
-        public async Task<ActionResult<Client>> PostLoginClient([FromBody] LoginModel loginModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var client = await _context.Clients.FirstOrDefaultAsync(p => p.ClientLogin.Equals(loginModel.Password) && p.ClientPassword.Equals(loginModel.Password));
-                if (client != null)
-                {
-                    return client;
-                }
-                else
-                {
-                    ModelState.AddModelError("Error", "Неверный логин или пароль!");
-                    return BadRequest();
-                }
-            }
-            else
-            {
-                ModelState.AddModelError("ValidateError", "Неккоректно введены данные!");
-                return BadRequest();
-            }
-
-        }
-
+        }   
+        
+        /// <summary>
+        /// POST запрос для авторизации сотрудников
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost("loginEmployee")]
         public async Task<ActionResult<Employee>> PostLoginEmployee([FromBody] LoginModel loginModel)
         {
+            //Если нет ошибок в модели
             if (ModelState.IsValid)
             {
+                //Ищем сотрудника с данным логином и паролем
                 var employee = await _context.Employees.Include(p => p.Role).FirstOrDefaultAsync(p => p.Login.Equals(loginModel.Login) && p.Password.Equals(loginModel.Password));
                 if (employee != null)
                 {
+                    //Если нашли, то подгружаем нужные ему поля и отправляем на приложение
                     if (employee is Doctor d)
                     {
                         _context.Entry(d).Collection(p => p.Records).Load();
@@ -64,21 +48,19 @@ namespace HealthyTeethAPI.Controllers
                 }
                 else
                 {
+                    //Иначе отправляем ошибка
                     ModelState.AddModelError("Error", "Неверный логин или пароль!");
                     return BadRequest(ModelState.Values.SelectMany(p => p.Errors));
                 }
             }
             else
             {
+                //Иначе отправляем ошибка
                 ModelState.AddModelError("ValidateError", "Неккоректно введены данные!");
                 return BadRequest(ModelState.Values.SelectMany(p => p.Errors));
             }
         }
 
-        [HttpPost("registerClient")]
-        public void PostRegisterClient([FromBody] Client client)
-        {
-        }
         [HttpPost("registerEmployee")]
         public void PostRegisterEmployee([FromBody] Employee employee)
         {

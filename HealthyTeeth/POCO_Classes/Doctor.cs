@@ -13,6 +13,8 @@ namespace HealthyTeeth.POCO_Classes
         public int CabinetId { get; set; }
         [JsonPropertyName("cabinet")]
         public Cabinet Cabinet { get; set; }
-        //public virtual ICollection<Record> Records { get; set; }
+        [JsonPropertyName("records")]
+        public virtual ICollection<Record> Records { get; set; }
+        //public virtual ICollection<ClientsVisit> ClientsVisits { get; set; }
     }
 }

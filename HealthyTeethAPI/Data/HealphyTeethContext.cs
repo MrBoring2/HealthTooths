@@ -60,16 +60,6 @@ namespace HealthyTeethAPI.Data
                     .IsRequired()
                     .HasMaxLength(80)
                     .IsUnicode(false);
-
-                entity.Property(e => e.ClientLogin)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ClientPassword)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<ClientsVisit>(entity =>
@@ -77,17 +67,7 @@ namespace HealthyTeethAPI.Data
                 entity.HasKey(e => e.ClientVisitId);
 
                 entity.ToTable("ClientsVisit");
-
-                entity.HasIndex(e => e.RecordId, "IX_Record")
-                    .IsUnique();
-
                 entity.Property(e => e.VisitDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Record)
-                    .WithOne(p => p.ClientsVisit)
-                    .HasForeignKey<ClientsVisit>(d => d.RecordId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ClientsVisit_Record");
 
                 entity.HasOne(d => d.VisitType)
                     .WithMany(p => p.ClientsVisits)
@@ -171,8 +151,8 @@ namespace HealthyTeethAPI.Data
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Record_Client");
-                entity.HasOne(d => d.ClientsVisit)
-                .WithOne(p => p.Record)
+                entity.HasOne(d => d.Client)
+                .WithMany(p => p.Records)
                 .OnDelete(DeleteBehavior.Cascade);
             });
 

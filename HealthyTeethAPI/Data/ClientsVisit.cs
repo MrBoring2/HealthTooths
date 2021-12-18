@@ -14,10 +14,12 @@ namespace HealthyTeethAPI.Data
 
         public int ClientVisitId { get; set; }
         public DateTime VisitDate { get; set; }
-        public int RecordId { get; set; }
+        public int ClientId { get; set; }
+        public int DoctorId { get; set; }
         public int VisitTypeId { get; set; }
-        public virtual Record Record { get; set; }
+        public virtual Client Client { get; set; }
         public virtual VisitType VisitType { get; set; }
+        public virtual Doctor Doctor { get; set; }
         public virtual ICollection<SpentConsumablesForVisit> SpentConsumablesForVisits { get; set; }
     }
 }

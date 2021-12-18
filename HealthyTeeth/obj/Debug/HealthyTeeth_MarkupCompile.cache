@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\MrBoring\source\repos\HealthyTeethProgramm\HealthyTeeth\obj\Debug\
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\
 HealthyTeeth
 none
 false
 DEBUG;TRACE
-C:\Users\MrBoring\source\repos\HealthyTeethProgramm\HealthyTeeth\App.xaml
-41587333874
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\App.xaml
+6591954828
 
-18181476304
-150-1456167015
-Views\AccountantWindow.xaml;Views\AdministratorWindow.xaml;Views\DoctorWindow.xaml;Views\LoginWindow.xaml;
+24-2005868486
+150395018735
+Styles\Templates\RecordsTemplate.xaml;Views\AccountantWindow.xaml;Views\AdministratorWindow.xaml;Views\CustomMessageBox.xaml;Views\DoctorWindow.xaml;Views\LoginWindow.xaml;
 
 False
 

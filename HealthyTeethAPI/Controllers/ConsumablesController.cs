@@ -20,7 +20,10 @@ namespace HealthyTeethAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Consumables
+        /// <summary>
+        /// GET запрос на получение всех расходников
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Consumable>>> GetConsumables()
         {
@@ -28,7 +31,10 @@ namespace HealthyTeethAPI.Controllers
            
         }
 
-        // GET: api/Consumables/5
+        /// <summary>
+        /// GET запрос на получение определённого расходника
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Consumable>> GetConsumable(int id)
         {
@@ -42,8 +48,10 @@ namespace HealthyTeethAPI.Controllers
             return consumable;
         }
 
-        // PUT: api/Consumables/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// PUT запрос на редактирование расходника
+        /// </summary>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutConsumable(int id, Consumable consumable)
         {
@@ -73,8 +81,10 @@ namespace HealthyTeethAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Consumables
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST запрос на добавление расходника
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Consumable>> PostConsumable(Consumable consumable)
         {
@@ -84,7 +94,10 @@ namespace HealthyTeethAPI.Controllers
             return CreatedAtAction("GetConsumable", new { id = consumable.ConsumableId }, consumable);
         }
 
-        // DELETE: api/Consumables/5
+        /// <summary>
+        /// DELETE запрос на удаление расходника
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConsumable(int id)
         {
@@ -100,6 +113,11 @@ namespace HealthyTeethAPI.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Проверка, если ли данный расходник в базе
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool ConsumableExists(int id)
         {
             return _context.Consumables.Any(e => e.ConsumableId == id);

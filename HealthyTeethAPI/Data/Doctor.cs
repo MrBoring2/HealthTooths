@@ -11,6 +11,7 @@ namespace HealthyTeethAPI.Data
     {
         public int CabinetId { get; set; }
         public Cabinet Cabinet { get; set; }
+        public virtual ICollection<ClientsVisit> ClientsVisits { get; set; }
         public virtual ICollection<Record> Records { get; set; }
     }
 }

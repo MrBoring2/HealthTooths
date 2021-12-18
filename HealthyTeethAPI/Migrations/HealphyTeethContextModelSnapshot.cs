@@ -51,18 +51,6 @@ namespace HealthyTeethAPI.Migrations
                     b.Property<string>("ClientGender")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClientLogin")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("ClientPassword")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(40)");
-
                     b.Property<string>("PassportNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -84,7 +72,10 @@ namespace HealthyTeethAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("RecordId")
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("VisitDate")
@@ -95,10 +86,11 @@ namespace HealthyTeethAPI.Migrations
 
                     b.HasKey("ClientVisitId");
 
-                    b.HasIndex("VisitTypeId");
+                    b.HasIndex("ClientId");
 
-                    b.HasIndex(new[] { "RecordId" }, "IX_Record")
-                        .IsUnique();
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("VisitTypeId");
 
                     b.ToTable("ClientsVisit");
                 });
@@ -249,9 +241,6 @@ namespace HealthyTeethAPI.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClientVisitId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
@@ -388,10 +377,15 @@ namespace HealthyTeethAPI.Migrations
 
             modelBuilder.Entity("HealthyTeethAPI.Data.ClientsVisit", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Record", "Record")
-                        .WithOne("ClientsVisit")
-                        .HasForeignKey("HealthyTeethAPI.Data.ClientsVisit", "RecordId")
-                        .HasConstraintName("FK_ClientsVisit_Record")
+                    b.HasOne("HealthyTeethAPI.Data.Client", "Client")
+                        .WithMany("ClientsVisits")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthyTeethAPI.Data.Doctor", "Doctor")
+                        .WithMany("ClientsVisits")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -401,7 +395,9 @@ namespace HealthyTeethAPI.Migrations
                         .HasConstraintName("FK_ClientsVisit_VisitType")
                         .IsRequired();
 
-                    b.Navigation("Record");
+                    b.Navigation("Client");
+
+                    b.Navigation("Doctor");
 
                     b.Navigation("VisitType");
                 });
@@ -481,6 +477,7 @@ namespace HealthyTeethAPI.Migrations
                         .WithMany("Records")
                         .HasForeignKey("ClientId")
                         .HasConstraintName("FK_Record_Client")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HealthyTeethAPI.Data.Doctor", "Doctor")
@@ -555,6 +552,8 @@ namespace HealthyTeethAPI.Migrations
 
             modelBuilder.Entity("HealthyTeethAPI.Data.Client", b =>
                 {
+                    b.Navigation("ClientsVisits");
+
                     b.Navigation("Records");
                 });
 
@@ -582,11 +581,6 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("ConsumablesInDeliveries");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Record", b =>
-                {
-                    b.Navigation("ClientsVisit");
-                });
-
             modelBuilder.Entity("HealthyTeethAPI.Data.Role", b =>
                 {
                     b.Navigation("Employees");
@@ -609,6 +603,8 @@ namespace HealthyTeethAPI.Migrations
 
             modelBuilder.Entity("HealthyTeethAPI.Data.Doctor", b =>
                 {
+                    b.Navigation("ClientsVisits");
+
                     b.Navigation("Records");
                 });
 #pragma warning restore 612, 618
