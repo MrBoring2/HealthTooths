@@ -1,4 +1,5 @@
-﻿using HealthyTeethAPI.Data;
+﻿using HealthyToothsModels;
+using HealthyTeethAPI.Data;
 using HealthyTeethAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

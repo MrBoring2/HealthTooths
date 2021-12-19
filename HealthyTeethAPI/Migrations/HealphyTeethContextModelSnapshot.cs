@@ -42,6 +42,9 @@ namespace HealthyTeethAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("ClientDateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ClientFullName")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -200,6 +203,9 @@ namespace HealthyTeethAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -344,13 +350,6 @@ namespace HealthyTeethAPI.Migrations
                     b.HasKey("VisitTypeId");
 
                     b.ToTable("VisitType");
-                });
-
-            modelBuilder.Entity("HealthyTeethAPI.Data.Accountant", b =>
-                {
-                    b.HasBaseType("HealthyTeethAPI.Data.Employee");
-
-                    b.ToTable("Accountant");
                 });
 
             modelBuilder.Entity("HealthyTeethAPI.Data.Administrator", b =>
@@ -508,15 +507,6 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("Сonsumable");
 
                     b.Navigation("Visit");
-                });
-
-            modelBuilder.Entity("HealthyTeethAPI.Data.Accountant", b =>
-                {
-                    b.HasOne("HealthyTeethAPI.Data.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("HealthyTeethAPI.Data.Accountant", "EmployeeId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("HealthyTeethAPI.Data.Administrator", b =>

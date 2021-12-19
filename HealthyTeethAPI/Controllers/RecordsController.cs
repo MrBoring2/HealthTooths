@@ -9,6 +9,7 @@ using HealthyTeethAPI.Data;
 using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
 using Newtonsoft.Json;
+using HealthyToothsModels;
 
 namespace HealthyTeethAPI.Controllers
 {

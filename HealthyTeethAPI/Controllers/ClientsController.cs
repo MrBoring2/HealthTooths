@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthyTeethAPI.Data;
+using Microsoft.AspNetCore.SignalR;
+using HealthyTeethAPI.Hubs;
+using Newtonsoft.Json;
+using HealthyToothsModels;
 
 namespace HealthyTeethAPI.Controllers
 {
@@ -14,10 +18,11 @@ namespace HealthyTeethAPI.Controllers
     public class ClientsController : ControllerBase
     {
         private readonly HealphyTeethContext _context;
-
-        public ClientsController(HealphyTeethContext context)
+        private IHubContext<MainHub> _hubContext;
+        public ClientsController(HealphyTeethContext context, IHubContext<MainHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         /// <summary>
@@ -27,7 +32,7 @@ namespace HealthyTeethAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Client>>> GetClients()
         {
-            return await _context.Clients.ToListAsync();
+            return await _context.Clients.Include(p => p.Records).ToListAsync();
         }
 
         /// <summary>
@@ -42,6 +47,7 @@ namespace HealthyTeethAPI.Controllers
 
             if (client == null)
             {
+                _context.Entry(client).Collection(p => p.Records).Load();
                 return NotFound();
             }
 
@@ -67,6 +73,7 @@ namespace HealthyTeethAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p => p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,7 +87,7 @@ namespace HealthyTeethAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>
@@ -93,6 +100,7 @@ namespace HealthyTeethAPI.Controllers
         {
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p=>p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetClient", new { id = client.ClientId }, client);
         }
@@ -113,8 +121,9 @@ namespace HealthyTeethAPI.Controllers
 
             _context.Clients.Remove(client);
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p => p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>

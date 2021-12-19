@@ -1,4 +1,5 @@
-﻿using HealthyTeeth.POCO_Classes;
+﻿
+using HealthyToothsModels;
 using HealthyTeeth.Services;
 using MaterialDesignExtensions.Controls;
 using MaterialDesignThemes.Wpf;
@@ -66,13 +67,6 @@ namespace HealthyTeeth.Views
                             this.Close();
                         }
                         break;
-                    case 2:
-                        {
-                            var accountantWindow = new AccountantWindow() { WindowStartupLocation = WindowStartupLocation.CenterScreen };
-                            accountantWindow.Show();
-                            this.Close();
-                        }
-                        break;
                     case 3:
                         {
                             var administratorWindow = new AdministratorWindow() { WindowStartupLocation = WindowStartupLocation.CenterScreen };
@@ -81,7 +75,6 @@ namespace HealthyTeeth.Views
                         }
                         break;
                 }
-
                 CustomMessageBox.Show($"Добро пожаловать, {UserService.Instance.Employee.FullName}", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)

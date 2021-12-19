@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\App.xaml
-6591954828
+13-1551312853
 
-24-2005868486
-150395018735
-Styles\Templates\RecordsTemplate.xaml;Views\AccountantWindow.xaml;Views\AdministratorWindow.xaml;Views\CustomMessageBox.xaml;Views\DoctorWindow.xaml;Views\LoginWindow.xaml;
+20421274790
+1511056467984
+Styles\Templates\LIstViewStyles.xaml;Styles\Templates\ListViewTemplates.xaml;Styles\Templates\RecordsTemplate.xaml;Views\AccountantWindow.xaml;Views\ClientWindow.xaml;Views\AdministratorWindow.xaml;Views\ClientsListWindow.xaml;Views\CustomMessageBox.xaml;Views\DoctorWindow.xaml;Views\EmployeesListWindow.xaml;Views\EmployeeWindow.xaml;Views\LoginWindow.xaml;Views\VisitWindow.xaml;
 
 False
 

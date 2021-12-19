@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml" />
                 <ResourceDictionary Source="Styles/Templates/RecordsTemplate.xaml"/>
+                <ResourceDictionary Source="Styles/Templates/ListViewTemplates.xaml" />
+                <ResourceDictionary Source="Styles/Templates/LIstViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

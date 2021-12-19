@@ -1,5 +1,5 @@
 ﻿using HealthyTeeth.Models;
-using HealthyTeeth.POCO_Classes;
+
 using HealthyTeeth.Services;
 using Newtonsoft.Json;
 using System;
@@ -17,6 +17,7 @@ using System.Windows.Media;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using HealthyToothsModels;
 
 namespace HealthyTeeth.Views
 {
@@ -388,6 +389,35 @@ namespace HealthyTeeth.Views
             var loginWindow = new LoginWindow();
             loginWindow.Show();
             this.Close();
+        }
+
+        /// <summary>
+        /// Кнопка оформить посещение
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void addVisit_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedRecord != null)
+            {
+                var visitWindow = new VisitWindow(SelectedRecord);
+                if(visitWindow.ShowDialog() == true)
+                {
+                    var response = await UserService.Instance.apiService.SendPostRequest("api/ClientsVisits", visitWindow.Visit);
+                    if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                    {
+                        CustomMessageBox.Show("Посещение успешно оформлено!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show($"Произошла ошибка при добавлении: {response.ErrorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                CustomMessageBox.Show("Сначал выберите запись!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         /// <summary>

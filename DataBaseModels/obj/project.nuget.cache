@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "YZ0xuNO5BOGcjY4LBBA+h7uapz2ljHtisVq6Ojlu164iprQXAOaDBvMQe2Zyi+FWmglcIMm6aaIhfSNKBAJoBA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\DataBaseModels\\DataBaseModels.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MrBoring\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

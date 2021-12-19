@@ -32,6 +32,8 @@ namespace HealthyTeethAPI
             services.AddControllers().AddNewtonsoftJson(options=>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects;
+                options.SerializerSettings.TypeNameAssemblyFormatHandling = Newtonsoft.Json.TypeNameAssemblyFormatHandling.Simple;
             });
             services.AddSignalR();
             services.AddSwaggerGen(c =>

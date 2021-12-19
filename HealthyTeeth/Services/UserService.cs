@@ -1,4 +1,5 @@
-﻿using HealthyTeeth.POCO_Classes;
+﻿
+using HealthyToothsModels;
 using Microsoft.AspNetCore.SignalR.Client;
 using RestSharp;
 using System;

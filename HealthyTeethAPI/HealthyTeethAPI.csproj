@@ -20,6 +20,17 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HealthyToothsModels\HealthyToothsModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataBaseModels">
+      <HintPath>..\DataBaseModels\bin\Debug\net5.0\DataBaseModels.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

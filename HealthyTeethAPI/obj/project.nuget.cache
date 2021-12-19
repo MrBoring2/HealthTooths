@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "r0GiseFHWgxzuKSiO7XUUMOQZgiL79FUp4YSoA2VhPaf1lAKhxOP7EwhBY3OquviB5EFuutHpxtPsKDhMlIniA==",
+  "dgSpecHash": "brYGNNXu37MURrtAcggC6jERVaOGap0GXKg1uPYUM1JZgslsmmhN9oiW5h7GQJbEh3GaEWLcV85E6/W5vGjjUg==",
   "success": true,
   "projectFilePath": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyTeethAPI\\HealthyTeethAPI.csproj",
   "expectedPackageFiles": [
@@ -132,6 +132,7 @@
     "C:\\Users\\MrBoring\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
     "C:\\Users\\MrBoring\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\MrBoring\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
+    "C:\\Users\\MrBoring\\.nuget\\packages\\system.text.json\\5.0.2\\system.text.json.5.0.2.nupkg.sha512",
     "C:\\Users\\MrBoring\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\MrBoring\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\MrBoring\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",

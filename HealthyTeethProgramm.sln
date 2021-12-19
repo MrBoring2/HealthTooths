@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyTeeth", "HealthyTeeth\HealthyTeeth.csproj", "{C6D3E101-8F26-40D2-B5EF-31F068065FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyTeethAPI", "HealthyTeethAPI\HealthyTeethAPI.csproj", "{F13EFC68-A38B-45FD-8EE4-72FDE278D891}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthyTeethAPI", "HealthyTeethAPI\HealthyTeethAPI.csproj", "{F13EFC68-A38B-45FD-8EE4-72FDE278D891}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyToothsModels", "HealthyToothsModels\HealthyToothsModels.csproj", "{87EFA19E-8D43-405B-95B3-AB086F74A014}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F13EFC68-A38B-45FD-8EE4-72FDE278D891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87EFA19E-8D43-405B-95B3-AB086F74A014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87EFA19E-8D43-405B-95B3-AB086F74A014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87EFA19E-8D43-405B-95B3-AB086F74A014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87EFA19E-8D43-405B-95B3-AB086F74A014}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

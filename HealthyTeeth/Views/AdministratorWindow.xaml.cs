@@ -23,5 +23,19 @@ namespace HealthyTeeth.Views
         {
             InitializeComponent();
         }
+
+        private void ClientsControl_Click(object sender, RoutedEventArgs e)
+        {
+            var clientsWindow = new ClientsListWindow(false);
+            clientsWindow.Show();
+            this.Close();
+        }
+
+        private void EmployeesControl_Click(object sender, RoutedEventArgs e)
+        {
+            var employeesWindow = new EmployeesListWindow();
+            employeesWindow.Show();
+            this.Close();
+        }
     }
 }

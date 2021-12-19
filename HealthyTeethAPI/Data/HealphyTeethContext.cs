@@ -1,5 +1,5 @@
 ﻿using System;
-using HealthyTeethAPI.Data;
+using HealthyToothsModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -32,7 +32,6 @@ namespace HealthyTeethAPI.Data
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Administrator> Administrators { get; set; }
-        public virtual DbSet<Accountant> Accountants { get; set; }
         public virtual DbSet<Storage> Storages { get; set; }
         public virtual DbSet<ConsumablesInStorage> ConsumablesInStorages { get; set; }
 
@@ -204,5 +203,7 @@ namespace HealthyTeethAPI.Data
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<Role> Role { get; set; }
     }
 }
