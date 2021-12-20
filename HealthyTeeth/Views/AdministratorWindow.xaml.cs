@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthyTeeth.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,33 @@ namespace HealthyTeeth.Views
         {
             var employeesWindow = new EmployeesListWindow();
             employeesWindow.Show();
+            this.Close();
+        }
+
+        private void Report_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            UserService.Instance.Logout();
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
+
+        private void ConsumablesControl_Click(object sender, RoutedEventArgs e)
+        {
+            var consumablesWindow = new ConsumablesListWindow();
+            consumablesWindow.Show();
+            this.Close();
+        }
+
+        private void OrderConsumables_Click(object sender, RoutedEventArgs e)
+        {
+            var orderWindow = new OrderConsumables();
+            orderWindow.Show();
             this.Close();
         }
     }

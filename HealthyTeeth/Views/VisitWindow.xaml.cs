@@ -27,18 +27,21 @@ namespace HealthyTeeth.Views
     {
         private string clientFullName;
         private DateTime visitDate;
-        private DateTime visitTime;
+
         private SpendConsumable selectedConsumable;
         private SpendConsumable selectedSpendConsumable;
         private VisitType selectedType;
         private ObservableCollection<VisitType> visitTypes;
+        private Storage selectedStorage;
         private ObservableCollection<SpendConsumable> displayedConsumables;
         private ObservableCollection<SpendConsumable> spendedConsumables;
+        private ObservableCollection<Storage> storages;
         public VisitWindow(Record record)
         {
             InitializeComponent();
             LoadConsumables();
             LoadTypes();
+            LoadStorages();
             CurrentRecord = record;
             VisitDate = record.RecordDate;
             ClientFullName = record.ClientFullName;
@@ -61,6 +64,24 @@ namespace HealthyTeeth.Views
             set
             {
                 selectedConsumable = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<Storage> Storages
+        {
+            get => storages;
+            set
+            {
+                storages = value;
+                OnPropertyChanged();
+            }
+        }
+        public Storage SelectedStorage
+        {
+            get => selectedStorage;
+            set
+            {
+                selectedStorage = value;
                 OnPropertyChanged();
             }
         }
@@ -134,6 +155,15 @@ namespace HealthyTeeth.Views
                 DisplayedConsumables = Consumables;
             }
         }
+        private async void LoadStorages()
+        {
+            var response = await UserService.Instance.apiService.SendGetRequest("api/Storages");
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Storages = JsonConvert.DeserializeObject<ObservableCollection<Storage>>(response.Content);
+                SelectedStorage = Storages.FirstOrDefault();
+            }
+        }
         private async void LoadTypes()
         {
             var response = await UserService.Instance.apiService.SendGetRequest("api/VisitTypes");
@@ -191,42 +221,42 @@ namespace HealthyTeeth.Views
 
         private void CreateVisit_Click(object sender, RoutedEventArgs e)
         {
-            if (Validate())
+            //if (Validate())
+            //{
+            Visit = new ClientsVisit
             {
-                Visit = new ClientsVisit
-                {
-                    ClientId = CurrentRecord.ClientId,
-                    DoctorId = UserService.Instance.Employee.EmployeeId,
-                    VisitDate = VisitDate,
-                    VisitTypeId = SelectedType.VisitTypeId,
-                    SpentConsumablesForVisits = new List<SpentConsumablesForVisit>()
-                };
-                foreach (var consumable in SpendedConsumables)
-                {
-                    Visit.SpentConsumablesForVisits.Add(
-                        new SpentConsumablesForVisit
-                        {
-                            СonsumableId = consumable.Consumable.ConsumableId,
-                            Amount = consumable.ConsumableAmount
-                        });
-                }
-
-                this.DialogResult = true;
+                ClientId = CurrentRecord.ClientId,
+                DoctorId = UserService.Instance.Employee.EmployeeId,
+                VisitDate = VisitDate.ToLocalTime(),
+                VisitTypeId = SelectedType.VisitTypeId,
+                SpentConsumablesForVisits = new List<SpentConsumablesForVisit>()
+            };
+            foreach (var consumable in SpendedConsumables)
+            {
+                Visit.SpentConsumablesForVisits.Add(
+                    new SpentConsumablesForVisit
+                    {
+                        СonsumableId = consumable.Consumable.ConsumableId,
+                        Amount = consumable.ConsumableAmount
+                    });
             }
+
+            this.DialogResult = true;
+            // }
         }
 
-        private bool Validate()
-        {
-            if (VisitDate != null && VisitDate.Date <= DateTime.Now.Date)
-            {
-                return true;
-            }
-            else
-            {
+        //private bool Validate()
+        //{
+        //    if (VisitDate != null &&  DateTime.Now.Date <= VisitDate.Date)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //    {
 
-                CustomMessageBox.Show("Запись не на сегодняшний день!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-        }
+        //        CustomMessageBox.Show("Запись не на сегодняшний день!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        return false;
+        //    }
+        //}
     }
 }

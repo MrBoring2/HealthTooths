@@ -1,0 +1,106 @@
+﻿<local:BaseWindow x:Class="HealthyTeeth.Views.ConsumablesListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HealthyTeeth.Views"
+        mc:Ignorable="d"
+        xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
+        Title="Здоровые зубы | Список расходников" Height="750" Width="970" MinHeight="750" MinWidth="970" Icon="/HealthyTeeth;component/Resources/logo.ico" >
+    <Grid Background="LightBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <material:Card Margin="20" Grid.RowSpan="1">
+            <Grid>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding EmptyVisibility}">
+                    <Image Source="/HealthyTeeth;component/Resources/empty.png" Width="200" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Поиск не дал результатов" FontSize="20" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <ListView x:Name="ConsumablesList" SizeChanged="ConsumablesList_SizeChanged" Loaded="ConsumablesList_Loaded" ItemsSource="{Binding DisplayedConsumables}" SelectedItem="{Binding SelectedConsumable}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn x:Name="name" Header="Название">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type GridViewColumn}">
+                                            <TextBlock Text="{Binding ConsumableName}" TextWrapping="Wrap"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="type" Header="Тип">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type GridViewColumn}">
+                                            <TextBlock Text="{Binding ConsumableType.ConsumableTypeName}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="cena" Header="Цена">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type GridViewColumn}">
+                                            <TextBlock Text="{Binding Price, StringFormat={}{0} руб.}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="amount" Header="Количество">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate DataType="{x:Type GridViewColumn}">
+                                            <TextBlock Text="{Binding TotalAmountInStorages}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+
+        </material:Card>
+
+        <StackPanel Orientation="Horizontal" Name="PaginatorPanel" HorizontalAlignment="Center"  Grid.Row="1" Grid.RowSpan="1">
+            <Button x:Name="ToFirst"  Click="ToFirst_Click" Content="«" Margin="0,7.5,0,7.5" Foreground="White" Height="35" Width="50" FontSize="30" ContentTemplate="{StaticResource buttonTemplate}"/>
+            <ListView Margin="5,7.5" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource paginator}" SelectionChanged="PagesList_SelectionChanged" SelectedItem="{Binding Paginator.SelectedPageNumber}" x:Name="PagesList" HorizontalAlignment="Stretch" Height="Auto" ItemsSource="{Binding Paginator.DisplayedPagesNumbers}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" Height="20" Width="45" FontSize="18" TextAlignment="Center"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            <Button x:Name="ToLast" TextBlock.TextAlignment="Center" Foreground="White" Click="ToLast_Click" Content="»" Margin="0" Height="35" Width="50" FontSize="30" ContentTemplate="{StaticResource buttonTemplate}"/>
+        </StackPanel>
+
+        <material:Card Grid.Row="2" Margin="20,5,20,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="285*"/>
+                    <ColumnDefinition Width="212*"/>
+                    <ColumnDefinition Width="255*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Поиск" Margin="5" FontSize="16" />
+                <TextBox Margin="5,55" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" material:HintAssist.Hint="Введите название расходника..." Height="30"/>
+                <TextBlock Text="Сортировка" Grid.Column="1" Margin="5" FontSize="16"/>
+                <ComboBox SelectedItem="{Binding SelectedSort}" ItemsSource="{Binding SortParameters}" DisplayMemberPath="Title" Grid.Column="1" Margin="5,55" material:HintAssist.Hint="Выберите сортировку" FontSize="16"/>
+                <Grid Grid.Column="1" VerticalAlignment="Bottom" Margin="5,20">
+                    <RadioButton x:Name="Ascending" Content="По возрастанию" HorizontalAlignment="Left" FontSize="14" GroupName="A" Margin="5" Checked="Ascending_Checked" IsChecked ="{Binding IsAscending}"/>
+                    <RadioButton x:Name="Descending" Content="По убыванию" HorizontalAlignment="Right" FontSize="14" GroupName="A" Checked="Descending_Checked" IsChecked="{Binding IsDescending}"/>
+                </Grid>
+
+                <TextBlock Text="Тип" Margin="5" FontSize="16" Grid.Column="2" Grid.ColumnSpan="1"/>
+                <ComboBox Margin="5,55" Grid.Column="2" SelectedItem="{Binding SelectedType}" material:HintAssist.Hint="Выберите тип" FontSize="16" ItemsSource="{Binding Types}" Grid.ColumnSpan="1"/>
+            </Grid>
+        </material:Card>
+        <Button x:Name="AddNewConsumable" Grid.Row="3" Margin="0,8,20,10" Foreground="White" HorizontalAlignment="Right" Width="182" Content="Добавить расходник" Click="AddNewConsumable_Click"  Height="Auto"/>
+        <Button x:Name="EditConsumable" Grid.Row="3" Margin="0,8,207,10" Foreground="White" HorizontalAlignment="Right" Width="214" Content="Редактировать расходник" Click="EditConsumable_Click"  Height="Auto"/>
+        <Button x:Name="RemoveConsumable" Grid.Row="3" Margin="0,8,426,10" Foreground="White" HorizontalAlignment="Right" Width="184" Content="Удалить рисходник" Click="RemoveConsumable_Click"  Height="Auto"/>
+        <Button x:Name="Back" Grid.Row="3" Margin="0,10,778,8" Foreground="White" HorizontalAlignment="Right" Width="164" Content="Назад" Click="Back_Click"  Height="Auto"/>
+    </Grid>
+</local:BaseWindow>

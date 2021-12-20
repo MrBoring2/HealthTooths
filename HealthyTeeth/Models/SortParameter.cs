@@ -16,6 +16,5 @@ namespace HealthyTeeth.Models
 
         public string Title { get; set; }
         public string Property { get; set; }
-        public bool IsDescening { get; set; }
     }
 }

@@ -135,8 +135,6 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.Text.Json.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.Threading.Channels.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.Threading.Tasks.Extensions.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.ValueTuple.dll
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.pdb
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.dll.config
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\MaterialDesignColors.pdb
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\MaterialDesignExtensions.xml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\MaterialDesignThemes.Wpf.pdb
@@ -176,11 +174,9 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\pt-BR\MaterialDesignEx
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\Ru\MaterialDesignExtensions.resources.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\ru-ru\MaterialDesignExtensions.resources.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\uz-Latn-UZ\MaterialDesignExtensions.resources.dll
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.csproj.AssemblyReference.cache
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Styles\Templates\LIstViewStyles.baml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Styles\Templates\ListViewTemplates.baml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Styles\Templates\RecordsTemplate.baml
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\AccountantWindow.g.cs
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ClientWindow.g.cs
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\AdministratorWindow.g.cs
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ClientsListWindow.g.cs
@@ -195,7 +191,6 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\GeneratedInternalTypeH
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth_MarkupCompile.cache
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth_MarkupCompile.lref
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\App.baml
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\AccountantWindow.baml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ClientWindow.baml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\AdministratorWindow.baml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ClientsListWindow.baml
@@ -212,3 +207,12 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.csproj.Co
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.csproj.CopyComplete
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.exe
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.pdb
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ConsumablesListWindow.g.cs
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ConsumableWindow.g.cs
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ConsumablesListWindow.baml
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\ConsumableWindow.baml
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\OrderConsumables.g.cs
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\Views\OrderConsumables.baml
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.pdb
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.dll.config
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.csproj.AssemblyReference.cache

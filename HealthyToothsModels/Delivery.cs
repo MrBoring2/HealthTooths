@@ -19,7 +19,9 @@ namespace HealthyToothsModels
        
         public int SupplierId { get; set; }
   
+        public int StorageId { get; set; }
         public virtual Supplier Supplier { get; set; }
+        public virtual Storage Storage { get; set; }
   
         public virtual ICollection<ConsumablesInDelivery> ConsumablesInDeliveries { get; set; }
     }

@@ -20,7 +20,7 @@ namespace HealthyTeethAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Cabinet", b =>
+            modelBuilder.Entity("HealthyToothsModels.Cabinet", b =>
                 {
                     b.Property<int>("CabinetId")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Cabinet");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Client", b =>
+            modelBuilder.Entity("HealthyToothsModels.Client", b =>
                 {
                     b.Property<int>("ClientId")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ClientsVisit", b =>
+            modelBuilder.Entity("HealthyToothsModels.ClientsVisit", b =>
                 {
                     b.Property<int>("ClientVisitId")
                         .ValueGeneratedOnAdd()
@@ -98,7 +98,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("ClientsVisit");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Consumable", b =>
+            modelBuilder.Entity("HealthyToothsModels.Consumable", b =>
                 {
                     b.Property<int>("ConsumableId")
                         .ValueGeneratedOnAdd()
@@ -124,7 +124,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Consumable");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ConsumableType", b =>
+            modelBuilder.Entity("HealthyToothsModels.ConsumableType", b =>
                 {
                     b.Property<int>("ConsumableTypeId")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("ConsumableType");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ConsumablesInDelivery", b =>
+            modelBuilder.Entity("HealthyToothsModels.ConsumablesInDelivery", b =>
                 {
                     b.Property<int>("DeliveryId")
                         .HasColumnType("int");
@@ -160,7 +160,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("ConsumablesInDelivery");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ConsumablesInStorage", b =>
+            modelBuilder.Entity("HealthyToothsModels.ConsumablesInStorage", b =>
                 {
                     b.Property<int>("StorageId")
                         .HasColumnType("int");
@@ -178,25 +178,32 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("ConsumablesInStorages");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Delivery", b =>
+            modelBuilder.Entity("HealthyToothsModels.Delivery", b =>
                 {
                     b.Property<int>("DeliveryId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime");
+
+                    b.Property<int>("StorageId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("DeliveryId");
 
+                    b.HasIndex("StorageId");
+
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Delivery");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Employee", b =>
+            modelBuilder.Entity("HealthyToothsModels.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
@@ -227,7 +234,7 @@ namespace HealthyTeethAPI.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeId");
@@ -237,7 +244,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Record", b =>
+            modelBuilder.Entity("HealthyToothsModels.Record", b =>
                 {
                     b.Property<int>("RecordId")
                         .ValueGeneratedOnAdd()
@@ -262,7 +269,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Record");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Role", b =>
+            modelBuilder.Entity("HealthyToothsModels.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -277,7 +284,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.SpentConsumablesForVisit", b =>
+            modelBuilder.Entity("HealthyToothsModels.SpentConsumablesForVisit", b =>
                 {
                     b.Property<int>("СonsumableId")
                         .HasColumnType("int");
@@ -295,7 +302,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("SpentConsumablesForVisit");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Storage", b =>
+            modelBuilder.Entity("HealthyToothsModels.Storage", b =>
                 {
                     b.Property<int>("StorageId")
                         .ValueGeneratedOnAdd()
@@ -310,7 +317,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Storages");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Supplier", b =>
+            modelBuilder.Entity("HealthyToothsModels.Supplier", b =>
                 {
                     b.Property<int>("SupplierId")
                         .ValueGeneratedOnAdd()
@@ -334,7 +341,7 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Supplier");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.VisitType", b =>
+            modelBuilder.Entity("HealthyToothsModels.VisitType", b =>
                 {
                     b.Property<int>("VisitTypeId")
                         .ValueGeneratedOnAdd()
@@ -352,9 +359,9 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("VisitType");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Administrator", b =>
+            modelBuilder.Entity("HealthyToothsModels.Administrator", b =>
                 {
-                    b.HasBaseType("HealthyTeethAPI.Data.Employee");
+                    b.HasBaseType("HealthyToothsModels.Employee");
 
                     b.Property<string>("PersonalKey")
                         .HasColumnType("nvarchar(max)");
@@ -362,9 +369,9 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Administrator");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Doctor", b =>
+            modelBuilder.Entity("HealthyToothsModels.Doctor", b =>
                 {
-                    b.HasBaseType("HealthyTeethAPI.Data.Employee");
+                    b.HasBaseType("HealthyToothsModels.Employee");
 
                     b.Property<int>("CabinetId")
                         .HasColumnType("int");
@@ -374,21 +381,21 @@ namespace HealthyTeethAPI.Migrations
                     b.ToTable("Doctor");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ClientsVisit", b =>
+            modelBuilder.Entity("HealthyToothsModels.ClientsVisit", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Client", "Client")
-                        .WithMany("ClientsVisits")
+                    b.HasOne("HealthyToothsModels.Client", "Client")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.Doctor", "Doctor")
+                    b.HasOne("HealthyToothsModels.Doctor", "Doctor")
                         .WithMany("ClientsVisits")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.VisitType", "VisitType")
+                    b.HasOne("HealthyToothsModels.VisitType", "VisitType")
                         .WithMany("ClientsVisits")
                         .HasForeignKey("VisitTypeId")
                         .HasConstraintName("FK_ClientsVisit_VisitType")
@@ -401,9 +408,9 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("VisitType");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Consumable", b =>
+            modelBuilder.Entity("HealthyToothsModels.Consumable", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.ConsumableType", "ConsumableType")
+                    b.HasOne("HealthyToothsModels.ConsumableType", "ConsumableType")
                         .WithMany("Consumables")
                         .HasForeignKey("ConsumableTypeId")
                         .HasConstraintName("FK_Consumable_ConsumableType")
@@ -412,15 +419,15 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("ConsumableType");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ConsumablesInDelivery", b =>
+            modelBuilder.Entity("HealthyToothsModels.ConsumablesInDelivery", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Consumable", "Consumable")
+                    b.HasOne("HealthyToothsModels.Consumable", "Consumable")
                         .WithMany("ConsumablesInDeliveries")
                         .HasForeignKey("ConsumableId")
                         .HasConstraintName("FK_ConsumablesInDelivery_Consumable")
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.Delivery", "Delivery")
+                    b.HasOne("HealthyToothsModels.Delivery", "Delivery")
                         .WithMany("ConsumablesInDeliveries")
                         .HasForeignKey("DeliveryId")
                         .HasConstraintName("FK_ConsumablesInDelivery_Delivery")
@@ -431,15 +438,15 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("Delivery");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ConsumablesInStorage", b =>
+            modelBuilder.Entity("HealthyToothsModels.ConsumablesInStorage", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Consumable", "Consumable")
+                    b.HasOne("HealthyToothsModels.Consumable", "Consumable")
                         .WithMany("ConsumablesInStorages")
                         .HasForeignKey("ConsumableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.Storage", "Storage")
+                    b.HasOne("HealthyToothsModels.Storage", "Storage")
                         .WithMany("ConsumablesInStorages")
                         .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -450,36 +457,46 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("Storage");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Delivery", b =>
+            modelBuilder.Entity("HealthyToothsModels.Delivery", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Supplier", "Supplier")
+                    b.HasOne("HealthyToothsModels.Storage", "Storage")
+                        .WithMany("Deliveries")
+                        .HasForeignKey("StorageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthyToothsModels.Supplier", "Supplier")
                         .WithMany("Deliveries")
                         .HasForeignKey("SupplierId")
                         .HasConstraintName("FK_Delivery_Supplier")
                         .IsRequired();
 
+                    b.Navigation("Storage");
+
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Employee", b =>
+            modelBuilder.Entity("HealthyToothsModels.Employee", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Role", "Role")
+                    b.HasOne("HealthyToothsModels.Role", "Role")
                         .WithMany("Employees")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Record", b =>
+            modelBuilder.Entity("HealthyToothsModels.Record", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Client", "Client")
+                    b.HasOne("HealthyToothsModels.Client", "Client")
                         .WithMany("Records")
                         .HasForeignKey("ClientId")
                         .HasConstraintName("FK_Record_Client")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.Doctor", "Doctor")
+                    b.HasOne("HealthyToothsModels.Doctor", "Doctor")
                         .WithMany("Records")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -490,15 +507,15 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.SpentConsumablesForVisit", b =>
+            modelBuilder.Entity("HealthyToothsModels.SpentConsumablesForVisit", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.ClientsVisit", "Visit")
+                    b.HasOne("HealthyToothsModels.ClientsVisit", "Visit")
                         .WithMany("SpentConsumablesForVisits")
                         .HasForeignKey("VisitId")
                         .HasConstraintName("FK_SpentConsumablesForVisit_ClientsVisit")
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.Consumable", "Сonsumable")
+                    b.HasOne("HealthyToothsModels.Consumable", "Сonsumable")
                         .WithMany("SpentConsumablesForVisits")
                         .HasForeignKey("СonsumableId")
                         .HasConstraintName("FK_SpentConsumablesForVisit_Consumable")
@@ -509,50 +526,48 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("Visit");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Administrator", b =>
+            modelBuilder.Entity("HealthyToothsModels.Administrator", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Employee", null)
+                    b.HasOne("HealthyToothsModels.Employee", null)
                         .WithOne()
-                        .HasForeignKey("HealthyTeethAPI.Data.Administrator", "EmployeeId")
+                        .HasForeignKey("HealthyToothsModels.Administrator", "EmployeeId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Doctor", b =>
+            modelBuilder.Entity("HealthyToothsModels.Doctor", b =>
                 {
-                    b.HasOne("HealthyTeethAPI.Data.Cabinet", "Cabinet")
+                    b.HasOne("HealthyToothsModels.Cabinet", "Cabinet")
                         .WithMany("Doctors")
                         .HasForeignKey("CabinetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthyTeethAPI.Data.Employee", null)
+                    b.HasOne("HealthyToothsModels.Employee", null)
                         .WithOne()
-                        .HasForeignKey("HealthyTeethAPI.Data.Doctor", "EmployeeId")
+                        .HasForeignKey("HealthyToothsModels.Doctor", "EmployeeId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Cabinet");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Cabinet", b =>
+            modelBuilder.Entity("HealthyToothsModels.Cabinet", b =>
                 {
                     b.Navigation("Doctors");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Client", b =>
+            modelBuilder.Entity("HealthyToothsModels.Client", b =>
                 {
-                    b.Navigation("ClientsVisits");
-
                     b.Navigation("Records");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ClientsVisit", b =>
+            modelBuilder.Entity("HealthyToothsModels.ClientsVisit", b =>
                 {
                     b.Navigation("SpentConsumablesForVisits");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Consumable", b =>
+            modelBuilder.Entity("HealthyToothsModels.Consumable", b =>
                 {
                     b.Navigation("ConsumablesInDeliveries");
 
@@ -561,37 +576,39 @@ namespace HealthyTeethAPI.Migrations
                     b.Navigation("SpentConsumablesForVisits");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.ConsumableType", b =>
+            modelBuilder.Entity("HealthyToothsModels.ConsumableType", b =>
                 {
                     b.Navigation("Consumables");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Delivery", b =>
+            modelBuilder.Entity("HealthyToothsModels.Delivery", b =>
                 {
                     b.Navigation("ConsumablesInDeliveries");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Role", b =>
+            modelBuilder.Entity("HealthyToothsModels.Role", b =>
                 {
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Storage", b =>
+            modelBuilder.Entity("HealthyToothsModels.Storage", b =>
                 {
                     b.Navigation("ConsumablesInStorages");
+
+                    b.Navigation("Deliveries");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Supplier", b =>
+            modelBuilder.Entity("HealthyToothsModels.Supplier", b =>
                 {
                     b.Navigation("Deliveries");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.VisitType", b =>
+            modelBuilder.Entity("HealthyToothsModels.VisitType", b =>
                 {
                     b.Navigation("ClientsVisits");
                 });
 
-            modelBuilder.Entity("HealthyTeethAPI.Data.Doctor", b =>
+            modelBuilder.Entity("HealthyToothsModels.Doctor", b =>
                 {
                     b.Navigation("ClientsVisits");
 

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthyTeethAPI.Data;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.SignalR;
+using HealthyTeethAPI.Hubs;
+using Newtonsoft.Json;
 
 namespace HealthyTeethAPI.Controllers
 {
@@ -14,11 +17,13 @@ namespace HealthyTeethAPI.Controllers
     [ApiController]
     public class ConsumablesController : ControllerBase
     {
+        private IHubContext<MainHub> _hubContext;
         private readonly HealphyTeethContext _context;
 
-        public ConsumablesController(HealphyTeethContext context)
+        public ConsumablesController(HealphyTeethContext context, IHubContext<MainHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         /// <summary>
@@ -28,8 +33,16 @@ namespace HealthyTeethAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Consumable>>> GetConsumables()
         {
-            return await _context.Consumables.Include(p=>p.ConsumableType).Include(p=>p.ConsumablesInStorages).ToListAsync();
-           
+            var list = await _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToListAsync();
+            foreach (var item in list)
+            {
+                foreach (var storage in item.ConsumablesInStorages)
+                {
+
+                    _context.Entry(storage).Reference(p => p.Storage).Load();
+                }
+            }
+            return list;
         }
 
         /// <summary>
@@ -66,6 +79,17 @@ namespace HealthyTeethAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                var list = await _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToListAsync();
+                foreach (var item in list)
+                {
+                    foreach (var storage in item.ConsumablesInStorages)
+                    {
+
+                        _context.Entry(storage).Reference(p => p.Storage).Load();
+                    }
+                }
+                await _hubContext.Clients.All.SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -79,7 +103,7 @@ namespace HealthyTeethAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>
@@ -91,6 +115,16 @@ namespace HealthyTeethAPI.Controllers
         {
             _context.Consumables.Add(consumable);
             await _context.SaveChangesAsync();
+            var list = await _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToListAsync();
+            foreach (var item in list)
+            {
+                foreach (var storage in item.ConsumablesInStorages)
+                {
+
+                    _context.Entry(storage).Reference(p => p.Storage).Load();
+                }
+            }
+            await _hubContext.Clients.All.SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetConsumable", new { id = consumable.ConsumableId }, consumable);
         }
@@ -110,8 +144,18 @@ namespace HealthyTeethAPI.Controllers
 
             _context.Consumables.Remove(consumable);
             await _context.SaveChangesAsync();
+            var list = await _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToListAsync();
+            foreach (var item in list)
+            {
+                foreach (var storage in item.ConsumablesInStorages)
+                {
 
-            return NoContent();
+                    _context.Entry(storage).Reference(p => p.Storage).Load();
+                }
+            }
+            await _hubContext.Clients.All.SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+            return Ok();
         }
 
         /// <summary>

@@ -2182,15 +2182,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "HealthyToothsModels/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/HealthyToothsModels.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/HealthyToothsModels.dll": {}
-        }
       }
     }
   },
@@ -7583,16 +7574,10 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
-    },
-    "HealthyToothsModels/1.0.0": {
-      "type": "project",
-      "path": "../HealthyToothsModels/HealthyToothsModels.csproj",
-      "msbuildProject": "../HealthyToothsModels/HealthyToothsModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "HealthyToothsModels >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 5.0.13",
       "Microsoft.AspNetCore.SignalR.Common >= 5.0.13",
       "Microsoft.EntityFrameworkCore >= 5.0.13",
@@ -7636,11 +7621,7 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {
-            "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyToothsModels\\HealthyToothsModels.csproj": {
-              "projectPath": "C:\\Users\\MrBoring\\GIT\\HealthTooths\\HealthyToothsModels\\HealthyToothsModels.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

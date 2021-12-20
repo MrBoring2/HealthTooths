@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
-        Title="Здоровые зубы | Список клиентов" Height="750" Width="918" Icon="/HealthyTeeth;component/Resources/logo.ico" >
+        Title="Здоровые зубы | Список клиентов" Height="750" Width="1088" MinHeight="750" MinWidth="1088" Icon="/HealthyTeeth;component/Resources/logo.ico" >
     <Grid Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="200*"/>
@@ -81,13 +81,22 @@
         <material:Card Grid.Row="2" Margin="20,5,20,5">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="233*"/>
-                    <ColumnDefinition Width="143*"/>
+                    <ColumnDefinition Width="486*"/>
+                    <ColumnDefinition Width="205*"/>
+                    <ColumnDefinition Width="349*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Поиск" Margin="5" FontSize="16" />
                 <TextBox Margin="5,55" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" material:HintAssist.Hint="Введите ФИО или паспортные данные пациента для поиска..." Height="30"/>
-                <TextBlock Text="Пол" Margin="5" FontSize="16" Grid.Column="1"/>
-                <ComboBox Margin="5,55" Grid.Column="1" SelectedItem="{Binding SelectedGender}" material:HintAssist.Hint="Выберите пол" FontSize="16" ItemsSource="{Binding Genders}"/>
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Сортировка по ФИО" FontSize="16" Margin="5"/>
+                    <RadioButton x:Name="Ascending" Content="По возрастанию" FontSize="16" IsChecked ="{Binding IsAscending}" Checked="Ascending_Checked" GroupName="A"/>
+                    <RadioButton x:Name="Descending" Content="По убыванию" FontSize="16" IsChecked ="{Binding IsDescending}" Checked="Descending_Checked" GroupName="A"/>
+                </StackPanel>
+
+
+                <TextBlock Text="Пол" Margin="5" FontSize="16" Grid.Column="2"/>
+                <ComboBox Margin="5,55" Grid.Column="2" SelectedItem="{Binding SelectedGender}" material:HintAssist.Hint="Выберите пол" FontSize="16" ItemsSource="{Binding Genders}"/>
             </Grid>
         </material:Card>
 

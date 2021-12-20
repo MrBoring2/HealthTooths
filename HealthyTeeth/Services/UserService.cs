@@ -34,9 +34,10 @@ namespace HealthyTeeth.Services
                 .WithAutomaticReconnect()
                 .Build();
         }
-        public void Logout()
+        public async void Logout()
         {
             Employee = null;
+            await HubConnection.StopAsync();
         }
     }
 }

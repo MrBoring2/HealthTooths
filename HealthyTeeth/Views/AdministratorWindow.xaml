@@ -8,16 +8,17 @@
         mc:Ignorable="d"
         xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
-        Title="Здоровые зубы | Администратор" Height="393" Width="527">
+        Title="Здоровые зубы | Администратор" Height="393" Width="527" Icon="/HealthyTeeth;component/Resources/logo.ico">
     <Grid Background="LightBlue">
         <material:Card Margin="20">
             <Grid>
                 <Button x:Name="ClientsControl" Content="Управление клиентами" HorizontalAlignment="Left" Foreground="White" Margin="10,55,0,0" VerticalAlignment="Top" Width="213" Click="ClientsControl_Click"/>
-                <Button x:Name="EmployeesControl" Content="Управление сотдуниками" HorizontalAlignment="Left" Foreground="White" Margin="245,55,0,0" VerticalAlignment="Top" Width="224" Click="EmployeesControl_Click"/>
-                <Button x:Name="ConsumablesControl" Content="Управление расходниками" HorizontalAlignment="Left" Foreground="White" Margin="10,145,0,0" VerticalAlignment="Top" Width="213"/>
-                <Button x:Name="OrderConsumables" Content="Заказать расходники" HorizontalAlignment="Left" Foreground="White" Margin="245,145,0,0" VerticalAlignment="Top" Width="224"/>
-                <Button x:Name="Exit" Content="Выход" HorizontalAlignment="Center" Foreground="White" Margin="245,224,12,0" VerticalAlignment="Top" Width="224"/>
+                <Button x:Name="EmployeesControl" Content="Управление сотдуниками" HorizontalAlignment="Right" Foreground="White" Margin="245,55,10,0" VerticalAlignment="Top" Width="224" Click="EmployeesControl_Click"/>
+                <Button x:Name="ConsumablesControl" Content="Управление расходниками" HorizontalAlignment="Left" Foreground="White" Margin="10,145,0,0" VerticalAlignment="Top" Width="213" Click="ConsumablesControl_Click"/>
+                <Button x:Name="OrderConsumables" Content="Заказать расходники" HorizontalAlignment="Right" Foreground="White" Margin="245,145,10,0" VerticalAlignment="Top" Width="224" Click="OrderConsumables_Click"/>
+                <Button x:Name="Exit" Content="Выход" HorizontalAlignment="Center" Foreground="White" Margin="0,272,0,0" VerticalAlignment="Top" Width="224" Click="Exit_Click"/>
                 <Button x:Name="CreateRecord" Content="Записать заявку" HorizontalAlignment="Left" Foreground="White" Margin="10,224,0,0" VerticalAlignment="Top" Width="213"/>
+                <Button x:Name="Report" Content="Отчёт по расходникам" HorizontalAlignment="Right" Foreground="White" Margin="0,224,10,0" VerticalAlignment="Top" Width="224" Click="Report_Click"/>
             </Grid>
         </material:Card>
     </Grid>

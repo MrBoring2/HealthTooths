@@ -1,6 +1,0 @@
-C:\Users\MrBoring\GIT\HealthTooths\ClassLibrary1\bin\Debug\ClassLibrary1.dll
-C:\Users\MrBoring\GIT\HealthTooths\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
-C:\Users\MrBoring\GIT\HealthTooths\ClassLibrary1\obj\Debug\ClassLibrary1.csproj.AssemblyReference.cache
-C:\Users\MrBoring\GIT\HealthTooths\ClassLibrary1\obj\Debug\ClassLibrary1.csproj.CoreCompileInputs.cache
-C:\Users\MrBoring\GIT\HealthTooths\ClassLibrary1\obj\Debug\ClassLibrary1.dll
-C:\Users\MrBoring\GIT\HealthTooths\ClassLibrary1\obj\Debug\ClassLibrary1.pdb

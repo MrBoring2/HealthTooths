@@ -24,19 +24,22 @@ namespace HealthyTeeth.Views
     /// </summary>
     public partial class EmployeeWindow : BaseWindow
     {
-        public readonly bool isEdit = false;
         private string fullName;
         private string selectedGender;
         private DateTime dateOfBirth;
         private string passportNumber;
         private string passpordSeries;
         private string phoneNumber;
+        private string login;
+        private string password;
         private string secretNumber;
-        private string cabinetNumber;
+        private Cabinet selectedCabinet;
         private Visibility administratorRoleVisibility;
         private Visibility doctorRoleVisibility;
         private Role selectedRole;
+        private ObservableCollection<Cabinet> cabinets;
         private ObservableCollection<Role> roles;
+
         public EmployeeWindow()
         {
             Genders = new List<string>
@@ -48,11 +51,11 @@ namespace HealthyTeeth.Views
             DateOfBirth = DateTime.Now;
             SelectedGender = Genders.FirstOrDefault();
             Employee = new Employee();
-          
+
         }
         public EmployeeWindow(Employee employee) : this()
         {
-            isEdit = true;
+            IsOperationAdd = false;
             Employee = employee;
             FullName = employee.FullName;
             SelectedGender = employee.Gender;
@@ -60,8 +63,18 @@ namespace HealthyTeeth.Views
             PassportNumber = employee.PassportNumber;
             PassportSeries = employee.PassportSeries;
             PhoneNumber = employee.PhoneNumber;
-            selectedRole = employee.Role;
-            SwitchRole(SelectedRole);
+            Login = employee.Login;
+            Password = employee.Password;
+        }
+        public bool IsOperationAdd { get; set; } = true;
+        public ObservableCollection<Cabinet> Cabinets
+        {
+            get => cabinets;
+            set
+            {
+                cabinets = value;
+                OnPropertyChanged();
+            }
         }
         public ObservableCollection<Role> Roles
         {
@@ -72,7 +85,7 @@ namespace HealthyTeeth.Views
                 OnPropertyChanged();
             }
         }
-        
+
         public Visibility AdministratorRoleVisibility
         {
             get => administratorRoleVisibility;
@@ -93,20 +106,37 @@ namespace HealthyTeeth.Views
         }
         public string SecretNumber
         {
-            get => cabinetNumber;
+            get => secretNumber;
             set
             {
-                cabinetNumber = value;
+                secretNumber = value;
                 OnPropertyChanged();
             }
         }
-
-        public string CabinetNumber
+        public string Login
         {
-            get => cabinetNumber;
+            get => login;
             set
             {
-                cabinetNumber = value;
+                login = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                OnPropertyChanged();
+            }
+        }
+        public Cabinet SelectedCabinet
+        {
+            get => selectedCabinet;
+            set
+            {
+                selectedCabinet = value;
                 OnPropertyChanged();
             }
         }
@@ -134,7 +164,7 @@ namespace HealthyTeeth.Views
             set
             {
                 selectedRole = value;
-                SwitchRole(SelectedRole);
+                SetRole(SelectedRole);
                 OnPropertyChanged();
             }
         }
@@ -176,6 +206,7 @@ namespace HealthyTeeth.Views
         }
         public Employee Employee { get; set; }
         public List<string> Genders { get; set; }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
 
@@ -187,9 +218,17 @@ namespace HealthyTeeth.Views
                 Employee.FullName = FullName;
                 Employee.Gender = SelectedGender;
                 Employee.PhoneNumber = PhoneNumber;
-                if(Employee is Doctor d)
+                Employee.Password = Password;
+                Employee.Login = Login;
+
+                if (IsOperationAdd)
                 {
-                    d.Cabinet.CabinetNumber = Convert.ToInt32(CabinetNumber);
+                    Employee.RoleId = SelectedRole.RoleId;
+                }
+
+                if (Employee is Doctor d)
+                {
+                    d.CabinetId = SelectedCabinet.CabinetId;
                 }
                 else if (Employee is Administrator a)
                 {
@@ -202,15 +241,43 @@ namespace HealthyTeeth.Views
                 CustomMessageBox.Show("Не все данные верно заполнены!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+        private async void LoadCabinets()
+        {
+            var response = await UserService.Instance.apiService.SendGetRequest("api/Cabinets");
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Cabinets = new ObservableCollection<Cabinet>(JsonConvert.DeserializeObject<List<Cabinet>>(response.Content).OrderBy(p => p.CabinetNumber));
+                if (Employee == new Employee())
+                {
+                    SelectedCabinet = Cabinets.FirstOrDefault();
+                }
+                else
+                {
+                    SelectedCabinet = (Employee is Doctor d) ? Cabinets.FirstOrDefault(p => p.CabinetId == d.Cabinet.CabinetId) : null;
+                }
+
+                DataContext = this;
+                InitializeComponent();
+            }
+        }
         private async void LoadRoles()
         {
             var response = await UserService.Instance.apiService.SendGetRequest("api/Roles");
-            if(response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Roles = JsonConvert.DeserializeObject<ObservableCollection<Role>>(response.Content);
                 selectedRole = Roles.FirstOrDefault();
-                DataContext = this;
-                InitializeComponent();
+
+                if (Employee.Role != null)
+                {
+                    SwitchRole(Employee.Role);
+                }
+                else
+                {
+                    DoctorRoleVisibility = Visibility.Visible;
+                    AdministratorRoleVisibility = Visibility.Hidden;
+                }
+                LoadCabinets();
             }
         }
         private void SwitchRole(Role role)
@@ -221,8 +288,8 @@ namespace HealthyTeeth.Views
                     {
                         DoctorRoleVisibility = Visibility.Visible;
                         AdministratorRoleVisibility = Visibility.Hidden;
-                        var d = typeof(Employee);
-                        CabinetNumber = (Employee as Doctor).Cabinet.CabinetNumber.ToString();
+
+                        SelectedRole = Roles.FirstOrDefault(p => p.RoleId == 1);
                     }
                     break;
                 case 3:
@@ -230,6 +297,32 @@ namespace HealthyTeeth.Views
                         DoctorRoleVisibility = Visibility.Hidden;
                         AdministratorRoleVisibility = Visibility.Visible;
                         SecretNumber = (Employee as Administrator).PersonalKey;
+                        SelectedRole = Roles.FirstOrDefault(p => p.RoleId == 3);
+                    }
+                    break;
+                default:
+                    {
+                        DoctorRoleVisibility = Visibility.Hidden;
+                        AdministratorRoleVisibility = Visibility.Hidden;
+                    }
+                    break;
+            }
+        }
+
+        private void SetRole(Role role)
+        {
+            switch (role.RoleId)
+            {
+                case 1:
+                    {
+                        DoctorRoleVisibility = Visibility.Visible;
+                        AdministratorRoleVisibility = Visibility.Hidden;
+                    }
+                    break;
+                case 3:
+                    {
+                        DoctorRoleVisibility = Visibility.Hidden;
+                        AdministratorRoleVisibility = Visibility.Visible;
                     }
                     break;
                 default:
@@ -247,7 +340,10 @@ namespace HealthyTeeth.Views
                 !string.IsNullOrEmpty(PhoneNumber) &&
                 !string.IsNullOrEmpty(PassportNumber) &&
                 !string.IsNullOrEmpty(PassportSeries) &&
-                DateOfBirth != null;
+                DateOfBirth != null &&
+                SelectedRole != null &&
+                (Employee as Doctor) != null ? SelectedCabinet != null : true &&
+                (Employee as Administrator) != null ? !string.IsNullOrEmpty(SecretNumber) : true;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

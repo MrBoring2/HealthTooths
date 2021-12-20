@@ -33,11 +33,11 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2">
                     <TextBlock Text="Дата посещения" Margin="5" FontSize="16"/>
-                    <DatePicker  Margin="5" material:HintAssist.Hint="Выберите дату" SelectedDate="{Binding VisitDate}" FontSize="14"/>
+                    <DatePicker IsEnabled="False"  Margin="5" material:HintAssist.Hint="Выберите дату" SelectedDate="{Binding VisitDate}" FontSize="14"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3">
                     <TextBlock Text="Время посещения" Margin="5" FontSize="16"/>
-                    <material:TimePicker x:Name="das" Margin="5" material:HintAssist.Hint="Выберите время" SelectedTime="{Binding VisitDate, Mode=TwoWay}" FontSize="14" SelectedTimeFormat="Long" />
+                    <material:TimePicker x:Name="das" IsEnabled="False"  Margin="5" material:HintAssist.Hint="Выберите время" SelectedTime="{Binding VisitDate, Mode=TwoWay}" FontSize="14" SelectedTimeFormat="Long" />
                 </StackPanel>
                 <StackPanel Grid.Row="4">
                     <TextBlock Text="Тип посещения" Margin="5" FontSize="16"/>
@@ -60,11 +60,14 @@
                     <ColumnDefinition Width="250*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="85"/>
                     <RowDefinition Height="307*"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Потраченные раходные материалы" FontSize="20" HorizontalAlignment="Center" Margin="5" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Склад" Margin="15,30,0,31" FontSize="14"/>
+                <ComboBox FontSize="14" ItemsSource="{Binding Storages}" DisplayMemberPath="StorageName" SelectedItem="{Binding SelectedStorage}" Margin="15,50,10,5"/>
+
                 <TextBlock Text="Список расходников" Grid.Row="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                 <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" SelectedItem="{Binding SelectedConsumable}" ItemContainerStyle="{StaticResource listViewItemStype}" Grid.Row="1" Grid.Column="0" Margin="5,20,5,5" Grid.RowSpan="1" ItemsSource="{Binding DisplayedConsumables}" ItemTemplate="{StaticResource consumablesToAdd}" HorizontalContentAlignment="Stretch"/>
                 <TextBlock Text="Список потраченных расходников" Grid.Row="1" Grid.Column="1" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top"/>

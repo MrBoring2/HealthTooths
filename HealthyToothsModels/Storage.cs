@@ -17,5 +17,6 @@ namespace HealthyToothsModels
         public string StorageName { get; set; }
   
         public virtual ICollection<ConsumablesInStorage> ConsumablesInStorages { get; set; }
+        public virtual ICollection<Delivery> Deliveries { get; set; }
     }
 }

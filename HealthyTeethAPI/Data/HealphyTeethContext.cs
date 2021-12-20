@@ -128,7 +128,7 @@ namespace HealthyTeethAPI.Data
             {
                 entity.ToTable("Delivery");
 
-                entity.Property(e => e.DeliveryId).ValueGeneratedNever();
+                entity.Property(e => e.DeliveryId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
 

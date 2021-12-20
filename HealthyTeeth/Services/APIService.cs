@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using HealthyToothsModels;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +27,31 @@ namespace HealthyTeeth.Services
             return await UserService.Instance.restClient.ExecuteAsync(request);
         }
         public async Task<IRestResponse> SendPostRequest(string requestUrl, object content)
-        {
+        { 
             var request = new RestRequest(requestUrl, Method.POST).AddJsonBody(content);
+            return await UserService.Instance.restClient.ExecuteAsync(request);
+        }
+        public async Task<IRestResponse> SendPostVisitRequest(string requestUrl, object content, int storageId)
+        {
+            var request = new RestRequest($"{requestUrl}/{storageId}", Method.POST).AddJsonBody(content);
+            return await UserService.Instance.restClient.ExecuteAsync(request);
+        }
+        public async Task<IRestResponse> SendPostEmployeeRequest(string requestUrl, object content)
+        {
+            var request = new RestRequest(requestUrl, Method.POST).AddJsonBody(JsonConvert.SerializeObject(content, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            }));
             return await UserService.Instance.restClient.ExecuteAsync(request);
         }
         public async Task<IRestResponse> SendPutRequest(string requestUrl, int id, object content)
         {
-            var request = new RestRequest(requestUrl + $"/{id}", Method.PUT).AddJsonBody(content);
+            var request = new RestRequest(requestUrl + $"/{id}", Method.PUT).AddJsonBody(JsonConvert.SerializeObject(content, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+            }));
             return await UserService.Instance.restClient.ExecuteAsync(request);
         }
         public async Task<IRestResponse> SendDeleteRequest(string requestUrl, int id)

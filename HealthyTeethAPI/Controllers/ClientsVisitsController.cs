@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthyTeethAPI.Data;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.SignalR;
+using HealthyTeethAPI.Hubs;
+using Newtonsoft.Json;
 
 namespace HealthyTeethAPI.Controllers
 {
@@ -14,11 +17,13 @@ namespace HealthyTeethAPI.Controllers
     [ApiController]
     public class ClientsVisitsController : ControllerBase
     {
+        private readonly IHubContext<MainHub> _hubContext;
         private readonly HealphyTeethContext _context;
 
-        public ClientsVisitsController(HealphyTeethContext context)
+        public ClientsVisitsController(HealphyTeethContext context, IHubContext<MainHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         // GET: api/ClientsVisits
@@ -75,11 +80,35 @@ namespace HealthyTeethAPI.Controllers
 
         // POST: api/ClientsVisits
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ClientsVisit>> PostClientsVisit(ClientsVisit clientsVisit)
+        [HttpPost("{storageId}")]
+        public async Task<ActionResult<ClientsVisit>> PostClientsVisit([FromBody] ClientsVisit clientsVisit, int storageId)
         {
+
+            var storage = _context.Storages.Include(p => p.ConsumablesInStorages).FirstOrDefault(p => p.StorageId == storageId);
+            foreach (var item in clientsVisit.SpentConsumablesForVisits)
+            {
+                var consumable = storage.ConsumablesInStorages.FirstOrDefault(p => p.ConsumableId == item.СonsumableId);
+                if (consumable == null)
+                {
+                    return BadRequest("Не хватает расходников на складе!");
+                }
+                else
+                {
+                    if (consumable.Amount - item.Amount <= 0)
+                    {
+                        return BadRequest("Не хватает расходников на складе!");
+                    }
+                    else
+                    {
+                        consumable.Amount -= item.Amount;
+                    }
+                }
+            }
+            _context.Records.Remove(_context.Records.FirstOrDefault(p => p.ClientId == clientsVisit.ClientId && p.DoctorId == clientsVisit.DoctorId && p.RecordDate == clientsVisit.VisitDate));
             _context.ClientsVisits.Add(clientsVisit);
+
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("UpdateRecords", JsonConvert.SerializeObject(_context.Records.Include(p => p.Client).Include(p => p.Doctor), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetClientsVisit", new { id = clientsVisit.ClientVisitId }, clientsVisit);
         }

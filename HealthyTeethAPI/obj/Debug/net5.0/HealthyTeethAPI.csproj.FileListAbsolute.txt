@@ -281,10 +281,8 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\HealthyTeeth
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\ref\HealthyTeethAPI.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\HealthyTeethAPI.pdb
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\HealthyTeethAPI.genruntimeconfig.cache
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\DataBaseModels.dll
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\DataBaseModels.pdb
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\HealthyTeethAPI.csproj.AssemblyReference.cache
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\HealthyToothsModels.dll
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\HealthyToothsModels.pdb
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\HealthyToothsModels.dll.config
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\System.Text.Json.dll
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\HealthyTeethAPI.csproj.AssemblyReference.cache
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\HealthyToothsModels.pdb

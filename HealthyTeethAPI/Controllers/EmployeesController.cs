@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthyTeethAPI.Data;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.SignalR;
+using HealthyTeethAPI.Hubs;
+using Newtonsoft.Json;
 
 namespace HealthyTeethAPI.Controllers
 {
@@ -14,11 +17,13 @@ namespace HealthyTeethAPI.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+        private IHubContext<MainHub> _hubContext;
         private readonly HealphyTeethContext _context;
 
-        public EmployeesController(HealphyTeethContext context)
+        public EmployeesController(HealphyTeethContext context, IHubContext<MainHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
 
@@ -70,11 +75,61 @@ namespace HealthyTeethAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            if (employee is Doctor d)
+            {
+                var doctor = _context.Doctors.Find(id);
+                //_context.Entry(doctor).Reference(p => p.Role).Load();
+
+                //if (doctor.Role.RoleId != employee.Role.RoleId)
+                //{
+                //    _context.Doctors.Remove(doctor);
+                //    if (employee.Role.RoleId == 3)
+                //    {
+                //        _context.Administrators.Add(new Administrator
+                //        { 
+                //            DateOfBirth =  employee.DateOfBirth,
+                //            });
+                //    }
+                //}
+
+                doctor.DateOfBirth = d.DateOfBirth;
+                doctor.FullName = d.FullName;
+                doctor.Gender = d.Gender;
+                doctor.Password = d.Password;
+                doctor.PassportNumber = d.PassportNumber;
+                doctor.PassportSeries = d.PassportSeries;
+                doctor.PhoneNumber = d.PhoneNumber;
+                //doctor.Role.RoleId = d.Role.RoleId;
+                doctor.CabinetId = d.CabinetId;
+                _context.Entry(doctor).State = EntityState.Modified;
+            }
+            else if (employee is Administrator a)
+            {
+                var administrator = _context.Administrators.Find(id);
+                administrator.DateOfBirth = a.DateOfBirth;
+                administrator.FullName = a.FullName;
+                administrator.Gender = a.Gender;
+                administrator.Password = a.Password;
+                administrator.PassportNumber = a.PassportNumber;
+                administrator.PassportSeries = a.PassportSeries;
+                administrator.PhoneNumber = a.PhoneNumber;
+                //administrator.Role.RoleId = a.Role.RoleId;
+                administrator.PersonalKey = a.PersonalKey;
+                _context.Entry(administrator).State = EntityState.Modified;
+            }
 
             try
             {
+
                 await _context.SaveChangesAsync();
+                var employees = _context.Employees.Include(p => p.Role).ToList();
+                employees = IncludeReferencesEmployees(employees).ToList();
+                await _hubContext.Clients.All.SendAsync("UpdateEmployees", JsonConvert.SerializeObject(employees, Formatting.None, new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+                    TypeNameAssemblyFormatHandling = Newtonsoft.Json.TypeNameAssemblyFormatHandling.Simple
+                }));
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -88,7 +143,7 @@ namespace HealthyTeethAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>
@@ -98,8 +153,23 @@ namespace HealthyTeethAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-            _context.Employees.Add(employee);
+            if (employee is Doctor d)
+            {
+                _context.Doctors.Add(d);
+            }
+            else if (employee is Administrator a)
+            {
+                _context.Administrators.Add(a);
+            }
             await _context.SaveChangesAsync();
+            var employees = _context.Employees.Include(p => p.Role).ToList();
+            employees = IncludeReferencesEmployees(employees).ToList();
+            await _hubContext.Clients.All.SendAsync("UpdateEmployees", JsonConvert.SerializeObject(employees, Formatting.None, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = Newtonsoft.Json.TypeNameAssemblyFormatHandling.Simple
+            }));
 
             return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
         }
@@ -119,8 +189,16 @@ namespace HealthyTeethAPI.Controllers
 
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
+            var employees = _context.Employees.Include(p => p.Role).ToList();
+            employees = IncludeReferencesEmployees(employees).ToList();
+            await _hubContext.Clients.All.SendAsync("UpdateEmployees", JsonConvert.SerializeObject(employees, Formatting.None, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,
+                TypeNameAssemblyFormatHandling = Newtonsoft.Json.TypeNameAssemblyFormatHandling.Simple
+            }));
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>
@@ -131,6 +209,18 @@ namespace HealthyTeethAPI.Controllers
         private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.EmployeeId == id);
+        }
+
+        private IEnumerable<Employee> IncludeReferencesEmployees(IEnumerable<Employee> employees)
+        {
+            foreach (var item in employees)
+            {
+                if (item is Doctor d)
+                {
+                    _context.Entry(d).Reference(p => p.Cabinet).Load();
+                }
+            }
+            return employees;
         }
     }
 }

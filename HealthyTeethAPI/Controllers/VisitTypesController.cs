@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthyTeethAPI.Data;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.SignalR;
+using HealthyTeethAPI.Hubs;
 
 namespace HealthyTeethAPI.Controllers
 {
@@ -14,11 +16,13 @@ namespace HealthyTeethAPI.Controllers
     [ApiController]
     public class VisitTypesController : ControllerBase
     {
+      
         private readonly HealphyTeethContext _context;
 
         public VisitTypesController(HealphyTeethContext context)
         {
             _context = context;
+
         }
 
         // GET: api/VisitTypes
@@ -79,6 +83,7 @@ namespace HealthyTeethAPI.Controllers
         public async Task<ActionResult<VisitType>> PostVisitType(VisitType visitType)
         {
             _context.VisitTypes.Add(visitType);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetVisitType", new { id = visitType.VisitTypeId }, visitType);

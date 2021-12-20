@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.AspNetCore.SignalR.Client;
 using HealthyToothsModels;
+using RestSharp;
 
 namespace HealthyTeeth.Views
 {
@@ -47,7 +48,7 @@ namespace HealthyTeeth.Views
             set
             {
                 selectedGender = value;
-                RefreshEmployees();
+                RefreshConsumables();
                 OnPropertyChanged();
             }
         }
@@ -77,7 +78,7 @@ namespace HealthyTeeth.Views
             set
             {
                 selectedRole = value;
-                RefreshEmployees();
+                RefreshConsumables();
                 OnPropertyChanged();
             }
         }
@@ -107,7 +108,7 @@ namespace HealthyTeeth.Views
             {
                 isDescending = value;
                 if (Employees != null)
-                    RefreshEmployees();
+                    RefreshConsumables();
                 OnPropertyChanged();
             }
         }
@@ -122,7 +123,7 @@ namespace HealthyTeeth.Views
             {
                 isAscending = value;
                 if (Employees != null)
-                    RefreshEmployees();
+                    RefreshConsumables();
                 OnPropertyChanged();
             }
         }
@@ -146,7 +147,7 @@ namespace HealthyTeeth.Views
             {
                 search = value;
                 OnPropertyChanged();
-                RefreshEmployees();
+                RefreshConsumables();
             }
         }
 
@@ -176,12 +177,12 @@ namespace HealthyTeeth.Views
                 RolesList = JsonConvert.DeserializeObject<ObservableCollection<Role>>(response.Content);
                 RolesList.ToList().ForEach(p => Roles.Add(p.RoleName));
                 selectedRole = Roles.FirstOrDefault();
-
-                Paginator = new Paginator(5, MaxPage());
                 isAscending = true;
                 isDescending = false;
                 selectedGender = Genders.FirstOrDefault();
-                RefreshEmployees();
+
+                Paginator = new Paginator(5, MaxPage());
+                RefreshConsumables();
                 InitializeComponent();
                 DataContext = this;
             }
@@ -204,8 +205,15 @@ namespace HealthyTeeth.Views
 
                 UserService.Instance.HubConnection.On<string>("UpdateEmployees", (employees) =>
                 {
-                    Employees = JsonConvert.DeserializeObject<ObservableCollection<Employee>>(employees);
-                    RefreshEmployees();
+                    Employees = JsonConvert.DeserializeObject<ObservableCollection<Employee>>(employees, new JsonSerializerSettings
+                    {
+                        
+                        TypeNameHandling = TypeNameHandling.Objects,
+                        TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                    });
+                    var t = employees;
+                    var c = Employees.FirstOrDefault(p=>p.FullName.Equals("Белоусова Ева Дмитриевна")) as Doctor;
+                    RefreshConsumables();
                 });
             }
 
@@ -235,7 +243,7 @@ namespace HealthyTeeth.Views
         /// <summary>
         /// Метод обновления списка записей
         /// </summary>
-        private void RefreshEmployees()
+        private void RefreshConsumables()
         {
             //Сортируем список
             var list = SortEmployees(Employees).ToList();
@@ -290,10 +298,41 @@ namespace HealthyTeeth.Views
             var addEmployeeWindow = new EmployeeWindow();
             if (addEmployeeWindow.ShowDialog() == true)
             {
-                var response = await UserService.Instance.apiService.SendPostRequest("api/Employees", addEmployeeWindow.Employee);
+                var response = new RestResponse();
+                var employee = addEmployeeWindow.Employee;
+                var admin = new Administrator();
+                var doctor = new Doctor();
+                if(employee.RoleId == 1)
+                {
+                    doctor.CabinetId = addEmployeeWindow.SelectedCabinet.CabinetId;
+                    doctor.DateOfBirth = employee.DateOfBirth;
+                    doctor.FullName = employee.FullName;
+                    doctor.Gender = employee.Gender;
+                    doctor.Login = employee.Login;
+                    doctor.Password = employee.Password;
+                    doctor.PassportNumber = employee.PassportNumber;
+                    doctor.PassportSeries = employee.PassportSeries;
+                    doctor.PhoneNumber = employee.PhoneNumber;
+                    doctor.RoleId = employee.RoleId;
+                    response = (RestResponse)await UserService.Instance.apiService.SendPostEmployeeRequest("api/Employees", doctor);
+                }
+                else if(employee.RoleId == 3)
+                {
+                    admin.PersonalKey = addEmployeeWindow.SecretNumber;
+                    admin.DateOfBirth = employee.DateOfBirth;
+                    admin.FullName = employee.FullName;
+                    admin.Gender = employee.Gender;
+                    admin.Login = employee.Login;
+                    admin.Password = employee.Password;
+                    admin.PassportNumber = employee.PassportNumber;
+                    admin.PassportSeries = employee.PassportSeries;
+                    admin.PhoneNumber = employee.PhoneNumber;
+                    admin.RoleId = employee.RoleId;
+                    response = (RestResponse)await UserService.Instance.apiService.SendPostEmployeeRequest("api/Employees", admin);
+                }
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    CustomMessageBox.Show($"Сотрудник {addEmployeeWindow.FullName} успешно добавлен!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
+                    CustomMessageBox.Show($"Сотрудник {employee.FullName} успешно добавлен!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
@@ -350,7 +389,7 @@ namespace HealthyTeeth.Views
         private void PagesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Paginator.RefrashPaginator();
-            RefreshEmployees();
+            RefreshConsumables();
         }
 
         private async void EditEmployee_Click(object sender, RoutedEventArgs e)
@@ -409,6 +448,22 @@ namespace HealthyTeeth.Views
             }
         }
 
+        private void Descending_Checked(object sender, RoutedEventArgs e)
+        {
+            IsDescending = true;
+            isAscending = false;
+        }
+
+        /// <summary>
+        /// RadioButton для отметки, что сортировка по возрастанию
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Ascending_Checked(object sender, RoutedEventArgs e)
+        {
+            IsAscending = true;
+            isDescending = false;
+        }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             var administratorWindow = new AdministratorWindow();

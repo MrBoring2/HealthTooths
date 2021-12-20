@@ -403,10 +403,14 @@ namespace HealthyTeeth.Views
                 var visitWindow = new VisitWindow(SelectedRecord);
                 if(visitWindow.ShowDialog() == true)
                 {
-                    var response = await UserService.Instance.apiService.SendPostRequest("api/ClientsVisits", visitWindow.Visit);
+                    var response = await UserService.Instance.apiService.SendPostVisitRequest("api/ClientsVisits", visitWindow.Visit, visitWindow.SelectedStorage.StorageId);
                     if (response.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         CustomMessageBox.Show("Посещение успешно оформлено!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        CustomMessageBox.Show($"Не хватает расходников на складе, попросите администратор доставить новые!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {

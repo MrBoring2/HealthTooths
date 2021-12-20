@@ -33,7 +33,6 @@
     ".NETCoreApp,Version=v5.0": {
       "HealthyTeethAPI/1.0.0": {
         "dependencies": {
-          "HealthyToothsModels": "1.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "5.0.13",
           "Microsoft.AspNetCore.SignalR.Common": "5.0.13",
           "Microsoft.EntityFrameworkCore": "5.0.13",
@@ -44,7 +43,7 @@
           "Newtonsoft.Json": "13.0.1",
           "Swashbuckle.AspNetCore": "5.6.3",
           "System.Text.Json": "5.0.2",
-          "DataBaseModels": "1.0.0.0",
+          "HealthyToothsModels": "1.0.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -1983,23 +1982,15 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "HealthyToothsModels/1.0.0": {
+      "HealthyToothsModels/1.0.0.0": {
         "runtime": {
-          "HealthyToothsModels.dll": {}
-        },
-        "compile": {
-          "HealthyToothsModels.dll": {}
-        }
-      },
-      "DataBaseModels/1.0.0.0": {
-        "runtime": {
-          "DataBaseModels.dll": {
+          "HealthyToothsModels.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         },
         "compile": {
-          "DataBaseModels.dll": {}
+          "HealthyToothsModels.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -4626,12 +4617,7 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "HealthyToothsModels/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "DataBaseModels/1.0.0.0": {
+    "HealthyToothsModels/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

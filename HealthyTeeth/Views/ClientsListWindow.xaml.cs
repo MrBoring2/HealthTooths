@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.AspNetCore.SignalR.Client;
 using HealthyToothsModels;
-using HealthyToothsModels;
+using HealthyTeeth.Models;
 
 namespace HealthyTeeth.Views
 {
@@ -30,6 +30,7 @@ namespace HealthyTeeth.Views
         private string search;
         private bool isAscending;
         private bool isDescending;
+        private SortParameter selectedSort;
         private ObservableCollection<Client> displayedClients;
         private Client selectedClient;
         private Visibility emptyVisibility;
@@ -40,6 +41,17 @@ namespace HealthyTeeth.Views
             InitializeFields(isModal);
         }
         public List<string> Genders { get; set; }
+        public SortParameter SelectedSort
+        {
+            get => selectedSort;
+            set
+            {
+                selectedSort = value;
+                RefreshClients();
+                OnPropertyChanged();
+            }
+        }
+        public List<SortParameter> SortParameters { get; set; }
         public string SelectedGender
         {
             get => selectedGender;
@@ -157,6 +169,13 @@ namespace HealthyTeeth.Views
                 "мужчина",
                 "женщина"
             };
+            SortParameters = new List<SortParameter>
+            {
+                new SortParameter("Название", "ConsumableName"),
+                new SortParameter("Цена", "Price")
+            };
+            selectedSort = SortParameters.FirstOrDefault();
+
             LoadClients();
         }
 
@@ -177,6 +196,7 @@ namespace HealthyTeeth.Views
                 UserService.Instance.HubConnection.On<string>("UpdateClients", (clients) =>
                 {
                     Clients = JsonConvert.DeserializeObject<ObservableCollection<Client>>(clients);
+                    
                     RefreshClients();
                 });
             }
@@ -386,7 +406,22 @@ namespace HealthyTeeth.Views
 
             }
         }
+        private void Descending_Checked(object sender, RoutedEventArgs e)
+        {
+            IsDescending = true;
+            isAscending = false;
+        }
 
+        /// <summary>
+        /// RadioButton для отметки, что сортировка по возрастанию
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Ascending_Checked(object sender, RoutedEventArgs e)
+        {
+            IsAscending = true;
+            isDescending = false;
+        }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             var administratorWindow = new AdministratorWindow();
