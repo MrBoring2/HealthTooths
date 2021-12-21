@@ -101,10 +101,10 @@
         </material:Card>
 
 
-        <Button x:Name="Select" Grid.Row="3" Margin="189,8,0,9" Visibility="{Binding SelectVisibility}" Foreground="White" HorizontalAlignment="Left" Width="150" Content="Выбрать клиента" Click="Select_Click"  Height="Auto"/>
+        <Button x:Name="Select" Grid.Row="3" Margin="189,8,0,10" Visibility="{Binding SelectVisibility}" Foreground="White" HorizontalAlignment="Left" Width="165" Content="Выбрать клиента" Click="Select_Click"  Height="Auto"/>
         <Button x:Name="AddNewClient" Grid.Row="3" Margin="0,8,20,10" Foreground="White" HorizontalAlignment="Right" Width="164" Content="Добавить клиента" Click="AddNewClient_Click"  Height="Auto"/>
         <Button x:Name="EditClient" Grid.Row="3" Margin="0,8,189,10" Foreground="White" HorizontalAlignment="Right" Width="200" Content="Редактировать клиента" Click="EditClient_Click"  Height="Auto"/>
         <Button x:Name="RemoveClient" Grid.Row="3" Margin="0,8,394,10" Foreground="White" HorizontalAlignment="Right" Width="164" Content="Удалить клиента" Click="RemoveClient_Click"  Height="Auto"/>
-        <Button x:Name="Back" Grid.Row="3" Margin="0,8,726,10" Foreground="White" HorizontalAlignment="Right" Width="164" Content="Назад" Click="Back_Click"  Height="Auto"/>
+        <Button x:Name="Back" Grid.Row="3" Margin="20,8,0,10" Foreground="White" HorizontalAlignment="Left" Width="164" Content="Назад" Click="Back_Click"  Height="Auto"/>
     </Grid>
 </local:BaseWindow>

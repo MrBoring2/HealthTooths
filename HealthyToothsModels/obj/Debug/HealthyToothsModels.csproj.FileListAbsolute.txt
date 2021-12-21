@@ -26,4 +26,3 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyToothsModels\bin\Debug\System.ValueTup
 C:\Users\MrBoring\GIT\HealthTooths\HealthyToothsModels\obj\Debug\HealthyToothsModels.csproj.CopyComplete
 C:\Users\MrBoring\GIT\HealthTooths\HealthyToothsModels\obj\Debug\HealthyToothsModels.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyToothsModels\obj\Debug\HealthyToothsModels.pdb
-C:\Users\MrBoring\GIT\HealthTooths\HealthyToothsModels\obj\Debug\HealthyToothsModels.csproj.AssemblyReference.cache

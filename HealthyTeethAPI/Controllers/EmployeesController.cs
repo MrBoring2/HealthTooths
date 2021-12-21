@@ -99,6 +99,7 @@ namespace HealthyTeethAPI.Controllers
                 doctor.PassportNumber = d.PassportNumber;
                 doctor.PassportSeries = d.PassportSeries;
                 doctor.PhoneNumber = d.PhoneNumber;
+                doctor.Login = d.Login;
                 //doctor.Role.RoleId = d.Role.RoleId;
                 doctor.CabinetId = d.CabinetId;
                 _context.Entry(doctor).State = EntityState.Modified;
@@ -110,11 +111,10 @@ namespace HealthyTeethAPI.Controllers
                 administrator.FullName = a.FullName;
                 administrator.Gender = a.Gender;
                 administrator.Password = a.Password;
+                administrator.Login = a.Login;
                 administrator.PassportNumber = a.PassportNumber;
                 administrator.PassportSeries = a.PassportSeries;
                 administrator.PhoneNumber = a.PhoneNumber;
-                //administrator.Role.RoleId = a.Role.RoleId;
-                administrator.PersonalKey = a.PersonalKey;
                 _context.Entry(administrator).State = EntityState.Modified;
             }
 

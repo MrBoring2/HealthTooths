@@ -12,6 +12,5 @@ namespace HealthyToothsModels
     public class Administrator : Employee
     {
     
-        public string PersonalKey { get; set; }
     }
 }

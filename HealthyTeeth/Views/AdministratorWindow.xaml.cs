@@ -34,7 +34,7 @@ namespace HealthyTeeth.Views
 
         private void EmployeesControl_Click(object sender, RoutedEventArgs e)
         {
-            var employeesWindow = new EmployeesListWindow();
+            var employeesWindow = new EmployeesListWindow(false);
             employeesWindow.Show();
             this.Close();
         }
@@ -63,6 +63,13 @@ namespace HealthyTeeth.Views
         {
             var orderWindow = new OrderConsumables();
             orderWindow.Show();
+            this.Close();
+        }
+
+        private void CreateRecord_Click(object sender, RoutedEventArgs e)
+        {
+            var recordWindow = new RecordWindow();
+            recordWindow.Show();
             this.Close();
         }
     }

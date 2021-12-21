@@ -4,14 +4,16 @@ using HealthyTeethAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HealthyTeethAPI.Migrations
 {
     [DbContext(typeof(HealphyTeethContext))]
-    partial class HealphyTeethContextModelSnapshot : ModelSnapshot
+    [Migration("20211221103947_delKeyAdmin")]
+    partial class delKeyAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

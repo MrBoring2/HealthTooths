@@ -16,6 +16,7 @@ namespace HealthyToothsModels
         public int ConsumableTypeId { get; set; }
  
         public string ConsumableTypeName { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
      
         public virtual ICollection<Consumable> Consumables { get; set; }
     }

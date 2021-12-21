@@ -100,7 +100,7 @@
         </material:Card>
         <Button x:Name="AddNewConsumable" Grid.Row="3" Margin="0,8,20,10" Foreground="White" HorizontalAlignment="Right" Width="182" Content="Добавить расходник" Click="AddNewConsumable_Click"  Height="Auto"/>
         <Button x:Name="EditConsumable" Grid.Row="3" Margin="0,8,207,10" Foreground="White" HorizontalAlignment="Right" Width="214" Content="Редактировать расходник" Click="EditConsumable_Click"  Height="Auto"/>
-        <Button x:Name="RemoveConsumable" Grid.Row="3" Margin="0,8,426,10" Foreground="White" HorizontalAlignment="Right" Width="184" Content="Удалить рисходник" Click="RemoveConsumable_Click"  Height="Auto"/>
+        <Button x:Name="RemoveConsumable" Grid.Row="3" Margin="0,8,426,10" Foreground="White" HorizontalAlignment="Right" Width="184" Content="Удалить расходник" Click="RemoveConsumable_Click"  Height="Auto"/>
         <Button x:Name="Back" Grid.Row="3" Margin="0,10,778,8" Foreground="White" HorizontalAlignment="Right" Width="164" Content="Назад" Click="Back_Click"  Height="Auto"/>
     </Grid>
 </local:BaseWindow>

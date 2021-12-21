@@ -265,7 +265,7 @@ namespace HealthyTeeth.Views
             list = list.Where(p => p.ClientFullName.Contains(Search)).ToList();
 
             //Фильтруем список по выбранному периоду
-            list = list.Where(p => p.RecordDate.Date >= StartDate && p.RecordDate <= EndDate).ToList();
+            list = list.Where(p => p.RecordDate.Date >= StartDate.Date && p.RecordDate.Date <= EndDate.Date).ToList();
 
             //Выбираем записи начиная с SelectedPageNumber умноженного на itemsPerPage и берём itemsPerPage
             list = list.Skip((Paginator.SelectedPageNumber - 1) * itemsPerPage)
@@ -295,7 +295,7 @@ namespace HealthyTeeth.Views
             var list = Records
                      .Where(p => p.ClientFullName.Contains(Search)).ToList();
             //Фильтруем наш список по выбранному периоду
-            list = list.Where(p => p.RecordDate.Date >= StartDate && p.RecordDate <= EndDate).ToList();
+            list = list.Where(p => p.RecordDate.Date >= StartDate.Date && p.RecordDate.Date <= EndDate.Date).ToList();
 
             return (int)Math.Ceiling((float)list.Count / (float)ItemsPerPage);
         }

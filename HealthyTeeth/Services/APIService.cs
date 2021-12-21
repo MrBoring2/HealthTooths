@@ -41,7 +41,8 @@ namespace HealthyTeeth.Services
             var request = new RestRequest(requestUrl, Method.POST).AddJsonBody(JsonConvert.SerializeObject(content, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             }));
             return await UserService.Instance.restClient.ExecuteAsync(request);
         }
@@ -50,7 +51,8 @@ namespace HealthyTeeth.Services
             var request = new RestRequest(requestUrl + $"/{id}", Method.PUT).AddJsonBody(JsonConvert.SerializeObject(content, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             }));
             return await UserService.Instance.restClient.ExecuteAsync(request);
         }

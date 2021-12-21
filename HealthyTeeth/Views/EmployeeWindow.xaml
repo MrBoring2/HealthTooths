@@ -29,7 +29,7 @@
                     <RowDefinition Height="45*"/>
                     <RowDefinition Height="45*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Карточка сотрудника" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="116,2,115,1"/>
+                <TextBlock Text="Карточка сотрудника" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="ФИО" FontSize="14" Grid.Row="1" Margin="5"/>
                 <TextBox Text="{Binding FullName}" FontSize="14" Margin="5,25,5,12" Grid.Row="1" material:HintAssist.Hint="Введите ФИО сотрудника" VerticalAlignment="Center" Height="28"/>
                 <TextBlock Text="Пол" FontSize="14" Grid.Row="2" Margin="5"/>
@@ -50,12 +50,12 @@
                 <ComboBox IsEnabled="{Binding IsOperationAdd}" DisplayMemberPath="RoleName" ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole}" FontSize="14" Margin="5,25,5,12" Grid.Row="9" material:HintAssist.Hint="Выберите роль"/>
 
                 <TextBlock Visibility="{Binding DoctorRoleVisibility}" Text="Номер кабинета" FontSize="14" Grid.Row="10" Margin="5"/>
-                <TextBlock Visibility="{Binding AdministratorRoleVisibility}" Text="Секретный код адмнистратора" FontSize="14" Grid.Row="10" Margin="5"/>
+               
                 <ComboBox SelectedItem="{Binding SelectedCabinet}" DisplayMemberPath="CabinetNumber" ItemsSource="{Binding Cabinets}" FontSize="14" Margin="5,25,5,12" Grid.Row="10" Visibility="{Binding DoctorRoleVisibility}" material:HintAssist.Hint="Выберите кабинет" VerticalAlignment="Center" Height="28"/>
-                <TextBox Text="{Binding SecretNumber}" FontSize="14" Margin="5,25,5,12" Grid.Row="10" Visibility="{Binding AdministratorRoleVisibility}" material:HintAssist.Hint="Введите секретный код администратора" VerticalAlignment="Center" Height="28"/>
+                
             </Grid>
         </material:Card>
-        <Button x:Name="Save" Content="Сохранить" HorizontalAlignment="Left" Margin="20,5,0,10" Width="200" Foreground="White" Grid.Row="1" Click="Save_Click" Height="Auto"/>
-        <Button x:Name="Cancel" Content="Отмена" HorizontalAlignment="Right" Margin="0,5,20,10" Width="200" Foreground="White" Grid.Row="1" Click="Cancel_Click" Height="Auto"/>
+        <Button x:Name="Save" Content="Сохранить" HorizontalAlignment="Left" Margin="20,5,0,20" Width="200" Foreground="White" Grid.Row="1" Click="Save_Click" Height="Auto"/>
+        <Button x:Name="Cancel" Content="Отмена" HorizontalAlignment="Right" Margin="0,5,20,20" Width="200" Foreground="White" Grid.Row="1" Click="Cancel_Click" Height="Auto"/>
     </Grid>
 </local:BaseWindow>

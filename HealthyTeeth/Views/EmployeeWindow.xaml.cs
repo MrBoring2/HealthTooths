@@ -32,9 +32,7 @@ namespace HealthyTeeth.Views
         private string phoneNumber;
         private string login;
         private string password;
-        private string secretNumber;
         private Cabinet selectedCabinet;
-        private Visibility administratorRoleVisibility;
         private Visibility doctorRoleVisibility;
         private Role selectedRole;
         private ObservableCollection<Cabinet> cabinets;
@@ -86,30 +84,12 @@ namespace HealthyTeeth.Views
             }
         }
 
-        public Visibility AdministratorRoleVisibility
-        {
-            get => administratorRoleVisibility;
-            set
-            {
-                administratorRoleVisibility = value;
-                OnPropertyChanged();
-            }
-        }
         public Visibility DoctorRoleVisibility
         {
             get => doctorRoleVisibility;
             set
             {
                 doctorRoleVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-        public string SecretNumber
-        {
-            get => secretNumber;
-            set
-            {
-                secretNumber = value;
                 OnPropertyChanged();
             }
         }
@@ -230,10 +210,6 @@ namespace HealthyTeeth.Views
                 {
                     d.CabinetId = SelectedCabinet.CabinetId;
                 }
-                else if (Employee is Administrator a)
-                {
-                    a.PersonalKey = SecretNumber;
-                }
                 this.DialogResult = true;
             }
             else
@@ -275,7 +251,7 @@ namespace HealthyTeeth.Views
                 else
                 {
                     DoctorRoleVisibility = Visibility.Visible;
-                    AdministratorRoleVisibility = Visibility.Hidden;
+              
                 }
                 LoadCabinets();
             }
@@ -287,7 +263,7 @@ namespace HealthyTeeth.Views
                 case 1:
                     {
                         DoctorRoleVisibility = Visibility.Visible;
-                        AdministratorRoleVisibility = Visibility.Hidden;
+          
 
                         SelectedRole = Roles.FirstOrDefault(p => p.RoleId == 1);
                     }
@@ -295,15 +271,14 @@ namespace HealthyTeeth.Views
                 case 3:
                     {
                         DoctorRoleVisibility = Visibility.Hidden;
-                        AdministratorRoleVisibility = Visibility.Visible;
-                        SecretNumber = (Employee as Administrator).PersonalKey;
+                  
                         SelectedRole = Roles.FirstOrDefault(p => p.RoleId == 3);
                     }
                     break;
                 default:
                     {
                         DoctorRoleVisibility = Visibility.Hidden;
-                        AdministratorRoleVisibility = Visibility.Hidden;
+                 
                     }
                     break;
             }
@@ -316,19 +291,19 @@ namespace HealthyTeeth.Views
                 case 1:
                     {
                         DoctorRoleVisibility = Visibility.Visible;
-                        AdministratorRoleVisibility = Visibility.Hidden;
+                     
                     }
                     break;
                 case 3:
                     {
                         DoctorRoleVisibility = Visibility.Hidden;
-                        AdministratorRoleVisibility = Visibility.Visible;
+                       
                     }
                     break;
                 default:
                     {
                         DoctorRoleVisibility = Visibility.Hidden;
-                        AdministratorRoleVisibility = Visibility.Hidden;
+                       
                     }
                     break;
             }
@@ -342,8 +317,7 @@ namespace HealthyTeeth.Views
                 !string.IsNullOrEmpty(PassportSeries) &&
                 DateOfBirth != null &&
                 SelectedRole != null &&
-                (Employee as Doctor) != null ? SelectedCabinet != null : true &&
-                (Employee as Administrator) != null ? !string.IsNullOrEmpty(SecretNumber) : true;
+                (Employee as Doctor) != null ? SelectedCabinet != null : true;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

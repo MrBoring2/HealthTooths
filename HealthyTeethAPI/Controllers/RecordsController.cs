@@ -106,6 +106,8 @@ namespace HealthyTeethAPI.Controllers
         {
             _context.Records.Add(@record);
             await _context.SaveChangesAsync();
+            var list = await _context.Records.Include(p => p.Client).Where(p => p.DoctorId == record.DoctorId).ToListAsync();
+            await _hubContext.Clients.All.SendAsync("UpdateRecords", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetRecord", new { id = @record.RecordId }, @record);
         }

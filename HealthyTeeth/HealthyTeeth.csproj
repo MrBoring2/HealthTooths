@@ -207,6 +207,9 @@
     <Compile Include="Models\DeliveryConsumable.cs" />
     <Compile Include="Models\SortParameter.cs" />
     <Compile Include="Models\SpendConsumable.cs" />
+    <Compile Include="Views\RecordWindow.xaml.cs">
+      <DependentUpon>RecordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\APIService.cs" />
     <Compile Include="Services\Paginator.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -251,6 +254,10 @@
     <Compile Include="Views\VisitWindow.xaml.cs">
       <DependentUpon>VisitWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\RecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Templates\LIstViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

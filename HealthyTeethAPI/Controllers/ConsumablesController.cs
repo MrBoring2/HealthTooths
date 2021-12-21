@@ -84,7 +84,6 @@ namespace HealthyTeethAPI.Controllers
                 {
                     foreach (var storage in item.ConsumablesInStorages)
                     {
-
                         _context.Entry(storage).Reference(p => p.Storage).Load();
                     }
                 }

@@ -34,11 +34,12 @@ namespace HealthyTeeth.Views
         private ObservableCollection<string> roles;
         private string selectedRole;
         private Employee selectedEmployee;
+        private Visibility selectVisibility;
         private Visibility emptyVisibility;
         private string selectedGender;
-        public EmployeesListWindow()
+        public EmployeesListWindow(bool isModal)
         {
-            InitializeFields();
+            InitializeFields(isModal);
 
         }
         public List<string> Genders { get; set; }
@@ -88,6 +89,15 @@ namespace HealthyTeeth.Views
             set
             {
                 displayedEmployees = value;
+                OnPropertyChanged();
+            }
+        }
+        public Visibility SelectVisibility
+        {
+            get => selectVisibility;
+            set
+            {
+                selectVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -153,11 +163,18 @@ namespace HealthyTeeth.Views
 
 
 
-        private void InitializeFields()
+        private void InitializeFields(bool isModal)
         {
             search = "";
             EmptyVisibility = Visibility.Hidden;
-
+            if (!isModal)
+            {
+                SelectVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                SelectVisibility = Visibility.Visible;
+            }
             //Измените это для отображения количетсва элементов на странице
             ItemsPerPage = 10;
             Genders = new List<string>
@@ -318,7 +335,6 @@ namespace HealthyTeeth.Views
                 }
                 else if(employee.RoleId == 3)
                 {
-                    admin.PersonalKey = addEmployeeWindow.SecretNumber;
                     admin.DateOfBirth = employee.DateOfBirth;
                     admin.FullName = employee.FullName;
                     admin.Gender = employee.Gender;
@@ -469,6 +485,25 @@ namespace HealthyTeeth.Views
             var administratorWindow = new AdministratorWindow();
             administratorWindow.Show();
             this.Close();
+        }
+
+        private void Select_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedEmployee != null)
+            {
+                if (SelectedEmployee is Doctor)
+                {
+                    this.DialogResult = true;
+                }
+                else
+                {
+                    CustomMessageBox.Show("Этот сотрудник не является доктором!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                CustomMessageBox.Show("Сначала выберите доктора!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
