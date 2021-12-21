@@ -311,13 +311,17 @@ namespace HealthyTeeth.Views
 
         private bool Validate()
         {
-            return !string.IsNullOrEmpty(FullName) &&
-                !string.IsNullOrEmpty(PhoneNumber) &&
-                !string.IsNullOrEmpty(PassportNumber) &&
-                !string.IsNullOrEmpty(PassportSeries) &&
-                DateOfBirth != null &&
-                SelectedRole != null &&
-                (Employee as Doctor) != null ? SelectedCabinet != null : true;
+            if (PassportNumber.Length == 6 && PassportSeries.Length == 4 && PhoneNumber.Length == 11)
+            {
+                return string.IsNullOrEmpty(FullName) &&
+                string.IsNullOrEmpty(PhoneNumber) &&
+                string.IsNullOrEmpty(PassportNumber) &&
+                string.IsNullOrEmpty(PassportSeries) &&
+                DateOfBirth == null &&
+                SelectedRole == null &&
+                (Employee as Doctor) == null || SelectedCabinet != null;
+            }
+            else return false;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

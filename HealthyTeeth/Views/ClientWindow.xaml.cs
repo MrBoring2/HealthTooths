@@ -133,6 +133,9 @@ namespace HealthyTeeth.Views
                 !string.IsNullOrEmpty(PhoneNumber) &&
                 !string.IsNullOrEmpty(PassportNumber) &&
                 !string.IsNullOrEmpty(PassportSeries) &&
+                PassportNumber.Length == 6 &&
+                PassportSeries.Length == 4 &&
+                PhoneNumber.Length < 20 &&
                 DateOfBirth != null;
         }
 

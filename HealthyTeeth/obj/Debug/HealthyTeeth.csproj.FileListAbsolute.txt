@@ -131,8 +131,6 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.Buffers.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.Diagnostics.DiagnosticSource.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\System.ValueTuple.dll
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.pdb
-C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.dll.config
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\MaterialDesignColors.pdb
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\MaterialDesignExtensions.xml
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\MaterialDesignThemes.Wpf.pdb
@@ -217,3 +215,6 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.csproj.Co
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.exe
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.pdb
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyTeeth.pdb
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\obj\Debug\HealthyTeeth.csproj.AssemblyReference.cache
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.pdb
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeeth\bin\Debug\HealthyToothsModels.dll.config

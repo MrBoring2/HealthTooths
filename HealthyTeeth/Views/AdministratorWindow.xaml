@@ -13,7 +13,7 @@
         <material:Card Margin="20">
             <Grid>
                 <Button x:Name="ClientsControl" Content="Управление клиентами" HorizontalAlignment="Left" Foreground="White" Margin="10,55,0,0" VerticalAlignment="Top" Width="213" Click="ClientsControl_Click"/>
-                <Button x:Name="EmployeesControl" Content="Управление сотдуниками" HorizontalAlignment="Right" Foreground="White" Margin="245,55,10,0" VerticalAlignment="Top" Width="224" Click="EmployeesControl_Click"/>
+                <Button x:Name="EmployeesControl" Content="Управление сотрудниками" HorizontalAlignment="Right" Foreground="White" Margin="245,55,10,0" VerticalAlignment="Top" Width="224" Click="EmployeesControl_Click"/>
                 <Button x:Name="ConsumablesControl" Content="Управление расходниками" HorizontalAlignment="Left" Foreground="White" Margin="10,145,0,0" VerticalAlignment="Top" Width="213" Click="ConsumablesControl_Click"/>
                 <Button x:Name="OrderConsumables" Content="Заказать расходники" HorizontalAlignment="Right" Foreground="White" Margin="245,145,10,0" VerticalAlignment="Top" Width="224" Click="OrderConsumables_Click"/>
                 <Button x:Name="Exit" Content="Выход" HorizontalAlignment="Center" Foreground="White" Margin="247,224,10,0" VerticalAlignment="Top" Width="224" Click="Exit_Click"/>

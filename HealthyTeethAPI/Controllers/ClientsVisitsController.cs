@@ -104,11 +104,22 @@ namespace HealthyTeethAPI.Controllers
                     }
                 }
             }
+
+            var list = _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToList();
+            foreach (var item in list)
+            {
+                foreach (var storageItem in item.ConsumablesInStorages)
+                {
+                    _context.Entry(storageItem).Reference(p => p.Storage).Load();
+                }
+            }
+
             _context.Records.Remove(_context.Records.FirstOrDefault(p => p.ClientId == clientsVisit.ClientId && p.DoctorId == clientsVisit.DoctorId && p.RecordDate == clientsVisit.VisitDate));
             _context.ClientsVisits.Add(clientsVisit);
 
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("UpdateRecords", JsonConvert.SerializeObject(_context.Records.Include(p => p.Client).Include(p => p.Doctor), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            await _hubContext.Clients.All.SendAsync("UpdateRecored", JsonConvert.SerializeObject(_context.Records.Include(p=>p.Client), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            await _hubContext.Clients.All.SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetClientsVisit", new { id = clientsVisit.ClientVisitId }, clientsVisit);
         }
