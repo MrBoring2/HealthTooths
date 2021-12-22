@@ -86,7 +86,7 @@
                     <ColumnDefinition Width="349*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Поиск" Margin="5" FontSize="16" />
-                <TextBox Margin="5,55" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" material:HintAssist.Hint="Введите ФИО или паспортные данные пациента для поиска..." Height="30"/>
+                <TextBox Margin="5,55" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" material:HintAssist.Hint="Введите ФИО..." Height="30"/>
 
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Сортировка по ФИО" FontSize="16" Margin="5"/>

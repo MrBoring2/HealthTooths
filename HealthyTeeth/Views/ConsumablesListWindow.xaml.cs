@@ -230,7 +230,7 @@ namespace HealthyTeeth.Views
             //Сортируем список
             var list = SortConsumables(Consumables).ToList();
             //Фильтруем список по поисковой строке
-            list = list.Where(p => p.ConsumableName.Contains(Search)).ToList();
+            list = list.Where(p => p.ConsumableName.ToLower().Contains(Search.ToLower())).ToList();
 
             //Фильтруем список клиентов по ролям
             list = list.Where(p => SelectedType != "Все" ? p.ConsumableType.ConsumableTypeName == SelectedType : p.ConsumableType.ConsumableTypeName.Contains("")).ToList();
@@ -261,7 +261,7 @@ namespace HealthyTeeth.Views
         {
             //Фильтруем наш список по поисковой строке
             var list = Consumables
-                     .Where(p => p.ConsumableType.ConsumableTypeName.Contains(Search)).ToList();
+                     .Where(p => p.ConsumableName.ToLower().Contains(Search.ToLower())).ToList();
 
             //Фильтруем список клиентов по ролям
             list = list.Where(p => SelectedType != "Все" ? p.ConsumableType.ConsumableTypeName == SelectedType : p.ConsumableType.ConsumableTypeName.Contains("")).ToList();

@@ -231,7 +231,7 @@ namespace HealthyTeeth.Views
             //Сортируем список
             var list = SortClients(Clients).ToList();
             //Фильтруем список по поисковой строке
-            list = list.Where(p => p.ClientFullName.Contains(Search)).ToList();
+            list = list.Where(p => p.ClientFullName.ToLower().Contains(Search.ToLower())).ToList();
 
             //Фильтруем список клиентов по полу
             list = list.Where(p => SelectedGender != "Все" ? p.ClientGender.Equals(SelectedGender) : p.ClientGender.Contains("")).ToList();
@@ -262,7 +262,7 @@ namespace HealthyTeeth.Views
         {
             //Фильтруем наш список по поисковой строке
             var list = Clients
-                     .Where(p => p.ClientFullName.Contains(Search)).ToList();
+                     .Where(p => p.ClientFullName.ToLower().Contains(Search.ToLower())).ToList();
 
             //Фильтруем список клиентов по полу
             list = list.Where(p => SelectedGender != "Все" ? p.ClientGender.Equals(SelectedGender) : p.ClientGender.Contains("")).ToList();
