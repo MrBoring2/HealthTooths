@@ -10,11 +10,14 @@ using HealthyToothsModels;
 using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using HealthyTeethAPI.Helpers;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmployeesController : ControllerBase
     {
         private IHubContext<MainHub> _hubContext;
@@ -124,7 +127,7 @@ namespace HealthyTeethAPI.Controllers
                 await _context.SaveChangesAsync();
                 var employees = _context.Employees.Include(p => p.Role).ToList();
                 employees = IncludeReferencesEmployees(employees).ToList();
-                await _hubContext.Clients.All.SendAsync("UpdateEmployees", JsonConvert.SerializeObject(employees, Formatting.None, new JsonSerializerSettings
+                await _hubContext.Clients.Group(SignalRGroups.admins_group).SendAsync("UpdateEmployees", JsonConvert.SerializeObject(employees, Formatting.None, new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects,

@@ -10,11 +10,13 @@ using HealthyToothsModels;
 using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ConsumablesController : ControllerBase
     {
         private IHubContext<MainHub> _hubContext;

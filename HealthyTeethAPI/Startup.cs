@@ -1,5 +1,7 @@
 using HealthyTeethAPI.Data;
+using HealthyTeethAPI.Helpers;
 using HealthyTeethAPI.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +37,40 @@ namespace HealthyTeethAPI
                 options.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects;
                 options.SerializerSettings.TypeNameAssemblyFormatHandling = Newtonsoft.Json.TypeNameAssemblyFormatHandling.Simple;
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = false;
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = AuthOptions.ISSUER,
+                        ValidateAudience = true,
+                        ValidAudience = AuthOptions.AUDIENCE,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accesstoken = context.Request.Query["access_token"];
+
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accesstoken) &&
+                                path.StartsWithSegments("/mainHub"))
+                            {
+                                context.Token = accesstoken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
             services.AddSignalR();
             services.AddSwaggerGen(c =>
             {
@@ -54,6 +90,7 @@ namespace HealthyTeethAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

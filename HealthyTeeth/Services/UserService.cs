@@ -14,23 +14,35 @@ namespace HealthyTeeth.Services
     {
         private static UserService instance;
         public readonly APIService apiService;
-        private UserService() 
+        private UserService()
         {
             apiService = new APIService();
-            restClient = new RestClient(apiService.apiConnection);
+            RestClient = new RestClient(APIService.apiConnection);
         }
+        public string Token { get; set; }
+
         public static UserService Instance => instance ?? (instance = new UserService());
-        public readonly RestClient restClient;
+        public RestClient RestClient { get; private set; }
         public HubConnection HubConnection { get; private set; }
         public Employee Employee { get; private set; }
-        public void SetEmployee(Employee employee)
+        public void SetClient(string user_name, string full_name, int role_id, int user_id, string token)
         {
-            Employee = employee;
+            Token = token;
+            Employee = new Employee()
+            {
+                Login = user_name,
+                RoleId = role_id,
+                EmployeeId = user_id,
+                FullName = full_name
+            };
         }
         public void InitializeHubConnection()
         {
             HubConnection = new HubConnectionBuilder()
-                .WithUrl($"{apiService.apiConnection}MainHub")
+                .WithUrl($"{APIService.apiConnection}mainHub", options =>
+                {
+                    options.AccessTokenProvider = () => Task.FromResult(Token);
+                })
                 .WithAutomaticReconnect()
                 .Build();
         }

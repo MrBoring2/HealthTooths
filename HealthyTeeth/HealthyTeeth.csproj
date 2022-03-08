@@ -207,6 +207,7 @@
     <Compile Include="Models\DeliveryConsumable.cs" />
     <Compile Include="Models\SortParameter.cs" />
     <Compile Include="Models\SpendConsumable.cs" />
+    <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Views\RecordWindow.xaml.cs">
       <DependentUpon>RecordWindow.xaml</DependentUpon>
     </Compile>

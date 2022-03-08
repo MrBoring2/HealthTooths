@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using HealthyTeeth.Models;
 
 namespace HealthyTeeth.Views
 {
@@ -51,14 +52,15 @@ namespace HealthyTeeth.Views
             IsLoginEnabled = false;
             Password = passwordText.Password;
             //Отпрвляем запрос на сервер для авторизации
-            var response = await UserService.Instance.apiService.SendPostRequest("api/Authentication/loginEmployee", new { Login = Login, Password = Password });
+            var response = await APIService.Authorize(Login, Password);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 //Если успешно авторизировались, то, в зависимости от роли, открываем новое окно
-                UserService.Instance.SetEmployee(JsonConvert.DeserializeObject<Employee>(response.Content));
+                var data = JsonConvert.DeserializeObject<TokenModel>(response.Content);
+                UserService.Instance.SetClient(data.user_name, data.full_name, data.role_id, data.user_id, data.access_token);
                 UserService.Instance.InitializeHubConnection();
                 await UserService.Instance.HubConnection.StartAsync();
-                switch (UserService.Instance.Employee.Role.RoleId)
+                switch (UserService.Instance.Employee.RoleId)
                 {
                     case 1:
                         {
@@ -82,9 +84,8 @@ namespace HealthyTeeth.Views
                 //Если нерпавлиьный логин или пароль
                 IsLoginEnabled = true;
                 var errorMessage = "";
-                var errors = JsonConvert.DeserializeObject<List<ModelStateException>>(response.Content);
-                errors.ForEach(p => errorMessage += p.ErrorMessage + "\n");
-                CustomMessageBox.Show(errorMessage, "Внимание, произошла ошибка!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                var errors = response.Content.ToString();
+                CustomMessageBox.Show(errors, "Внимание, произошла ошибка!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {

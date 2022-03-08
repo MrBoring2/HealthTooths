@@ -219,7 +219,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadCabinets()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Cabinets");
+            var response = await APIService.GetRequest("api/Cabinets");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Cabinets = new ObservableCollection<Cabinet>(JsonConvert.DeserializeObject<List<Cabinet>>(response.Content).OrderBy(p => p.CabinetNumber));
@@ -238,7 +238,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadRoles()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Roles");
+            var response = await APIService.GetRequest("api/Roles");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Roles = JsonConvert.DeserializeObject<ObservableCollection<Role>>(response.Content);
@@ -313,13 +313,13 @@ namespace HealthyTeeth.Views
         {
             if (PassportNumber.Length == 6 && PassportSeries.Length == 4 && PhoneNumber.Length == 11)
             {
-                return string.IsNullOrEmpty(FullName) &&
-                string.IsNullOrEmpty(PhoneNumber) &&
-                string.IsNullOrEmpty(PassportNumber) &&
-                string.IsNullOrEmpty(PassportSeries) &&
-                DateOfBirth == null &&
-                SelectedRole == null &&
-                (Employee as Doctor) == null || SelectedCabinet != null;
+                return !string.IsNullOrEmpty(FullName) &&
+                !string.IsNullOrEmpty(PhoneNumber) &&
+                !string.IsNullOrEmpty(PassportNumber) &&
+                !string.IsNullOrEmpty(PassportSeries) &&
+                DateOfBirth != null &&
+                SelectedRole != null &&
+                ((Employee as Doctor) == null || SelectedCabinet != null);
             }
             else return false;
         }

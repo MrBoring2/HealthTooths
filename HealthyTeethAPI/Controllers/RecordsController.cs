@@ -10,11 +10,13 @@ using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
 using Newtonsoft.Json;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RecordsController : ControllerBase
     {
         private IHubContext<MainHub> _hubContext;
@@ -104,10 +106,19 @@ namespace HealthyTeethAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Record>> PostRecord(Record @record)
         {
+
+            var records = _context.Records.Where(p => p.DoctorId == record.DoctorId).ToList();
+            if (records.FirstOrDefault(p => p.RecordDate <= @record.RecordDate + new TimeSpan(0, 20, 0) && p.) != null)
+            {
+                return BadRequest("В этот период уже есть запись. Сеанс длится не менее 20 минут.");
+            }
+
             _context.Records.Add(@record);
             await _context.SaveChangesAsync();
+            var connectionId = "";
+            MainHub.ConnectedUsers.TryGetValue(_context.Employees.FirstOrDefault(p => p.EmployeeId == @record.DoctorId).Login, out connectionId);
             var list = await _context.Records.Include(p => p.Client).Where(p => p.DoctorId == record.DoctorId).ToListAsync();
-            await _hubContext.Clients.All.SendAsync("UpdateRecords", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            await _hubContext.Clients.Client(connectionId).SendAsync("UpdateRecords", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetRecord", new { id = @record.RecordId }, @record);
         }

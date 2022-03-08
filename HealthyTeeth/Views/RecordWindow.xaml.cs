@@ -80,6 +80,11 @@ namespace HealthyTeeth.Views
 
             }
         }
+        /// <summary>
+        /// Создать запись
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void CreateRecord_Click(object sender, RoutedEventArgs e)
         {
             if (Doctor != null && Client != null)
@@ -102,7 +107,7 @@ namespace HealthyTeeth.Views
                     RecordDate = RecordDate.ToLocalTime()
                 };
 
-                var response = await UserService.Instance.apiService.SendPostRequest("api/Records", record);
+                var response = await APIService.PostRequest("api/Records", record);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     CustomMessageBox.Show("Запись успешно добавлена!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -114,8 +119,7 @@ namespace HealthyTeeth.Views
                 }
                 else
                 {
-                    CustomMessageBox.Show($"Произошла ошибка при добавлении ({response.StatusCode}): {response.ErrorMessage}!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                    CustomMessageBox.Show($"Произошла ошибка при добавлении: {response.Content}!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
@@ -124,14 +128,11 @@ namespace HealthyTeeth.Views
             }
         }
 
-
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             var administratorWindow = new AdministratorWindow();
             administratorWindow.Show();
             this.Close();
         }
-
-
     }
 }

@@ -127,9 +127,12 @@ namespace HealthyTeeth.Views
                 OnPropertyChanged();
             }
         }
+        /// <summary>
+        /// Загрузка расходников
+        /// </summary>
         private async void LoadConsumables()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Consumables");
+            var response = await APIService.GetRequest("api/Consumables");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
 
@@ -139,25 +142,35 @@ namespace HealthyTeeth.Views
                 DisplayedConsumables = Consumables;
             }
         }
+        /// <summary>
+        /// Загрузка складов
+        /// </summary>
         private async void LoadStorages()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Storages");
+            var response = await APIService.GetRequest("api/Storages");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Storages = JsonConvert.DeserializeObject<ObservableCollection<Storage>>(response.Content);
                 SelectedStorage = Storages.FirstOrDefault();
             }
         }
+        /// <summary>
+        /// Загрузка поставщиков
+        /// </summary>
         private async void LoadSuppliers()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Suppliers");
+            var response = await APIService.GetRequest("api/Suppliers");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Suppliers = JsonConvert.DeserializeObject<ObservableCollection<Supplier>>(response.Content);
                 SelectedSupplier = Suppliers.FirstOrDefault();
             }
         }
-
+        /// <summary>
+        /// Создание заказа на доставку
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Order_Click(object sender, RoutedEventArgs e)
         {
             if (SpendedConsumables.Count > 0)
@@ -178,7 +191,7 @@ namespace HealthyTeeth.Views
                         });
                 }
 
-                var response = await UserService.Instance.apiService.SendPostRequest("api/Deliveries", Delivery);
+                var response = await APIService.PostRequest("api/Deliveries", Delivery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     CustomMessageBox.Show("Заказ на доставку успешно оформен!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -199,7 +212,11 @@ namespace HealthyTeeth.Views
             }
         }
 
-
+        /// <summary>
+        /// Добавить в список доставки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddToList_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedConsumable != null)
@@ -226,7 +243,11 @@ namespace HealthyTeeth.Views
                 CustomMessageBox.Show("Сначала выберите расходник!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
+        /// <summary>
+        /// Удалить из списка доставки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveFromList_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedSpendConsumable != null)
@@ -239,7 +260,11 @@ namespace HealthyTeeth.Views
                 CustomMessageBox.Show("Сначала выберите расходник!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
+        /// <summary>
+        /// Назад к окну администратора
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             var administratorWindow = new AdministratorWindow();

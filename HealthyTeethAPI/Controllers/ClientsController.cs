@@ -10,11 +10,14 @@ using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
 using Newtonsoft.Json;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.Authorization;
+using HealthyTeethAPI.Helpers;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientsController : ControllerBase
     {
         private readonly HealphyTeethContext _context;
@@ -73,7 +76,7 @@ namespace HealthyTeethAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                await _hubContext.Clients.All.SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p => p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                await _hubContext.Clients.Groups(SignalRGroups.admins_group).SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p => p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -100,7 +103,7 @@ namespace HealthyTeethAPI.Controllers
         {
             _context.Clients.Add(client);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p=>p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            await _hubContext.Clients.All.SendAsync("UpdateClients", JsonConvert.SerializeObject(_context.Clients.Include(p => p.Records).ToList(), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetClient", new { id = client.ClientId }, client);
         }

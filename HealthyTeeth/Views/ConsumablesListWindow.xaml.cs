@@ -169,7 +169,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadTypes()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/ConsumableTypes");
+            var response = await APIService.GetRequest("api/ConsumableTypes");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Types = new ObservableCollection<string> { "Все" };
@@ -185,9 +185,12 @@ namespace HealthyTeeth.Views
                 DataContext = this;
             }
         }
+        /// <summary>
+        /// Загрузка расходников
+        /// </summary>
         private async void LoadConsumables()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Consumables");
+            var response = await APIService.GetRequest("api/Consumables");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Consumables = JsonConvert.DeserializeObject<ObservableCollection<Consumable>>(response.Content);
@@ -205,7 +208,7 @@ namespace HealthyTeeth.Views
         /// <summary>
         /// Сортировка записей
         /// </summary>
-        /// <param name="records"></param>
+        /// <param name="records">Список расходников</param>
         /// <returns></returns>
         private IEnumerable<Consumable> SortConsumables(IEnumerable<Consumable> consumables)
         {
@@ -274,7 +277,7 @@ namespace HealthyTeeth.Views
             var addConsumableWindow = new ConsumableWindow();
             if (addConsumableWindow.ShowDialog() == true)
             {
-                var response = await UserService.Instance.apiService.SendPostRequest("api/Consumables", addConsumableWindow.Consumable);
+                var response = await APIService.PostRequest("api/Consumables", addConsumableWindow.Consumable);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
@@ -344,7 +347,7 @@ namespace HealthyTeeth.Views
                 var employeeWindow = new ConsumableWindow(SelectedConsumable);
                 if (employeeWindow.ShowDialog() == true)
                 {
-                    var response = await UserService.Instance.apiService.SendPutRequest("api/Consumables", employeeWindow.Consumable.ConsumableId, employeeWindow.Consumable);
+                    var response = await APIService.PutRequest("api/Consumables", employeeWindow.Consumable.ConsumableId, employeeWindow.Consumable);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show($"Расходник {employeeWindow.ConsumableName} успешно изменён!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -372,7 +375,7 @@ namespace HealthyTeeth.Views
                 var result = CustomMessageBox.Show("Вы точно хотите удалить этот расходник?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    var response = await UserService.Instance.apiService.SendDeleteRequest("api/Consumables", SelectedConsumable.ConsumableId);
+                    var response = await APIService.DeleteRequest("api/Consumables", SelectedConsumable.ConsumableId);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show($"Расходник успешно удалён!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -108,7 +108,7 @@ namespace HealthyTeeth.Views
         
         private async void LoadTypes()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/ConsumableTypes");
+            var response = await APIService.GetRequest("api/ConsumableTypes");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Types = JsonConvert.DeserializeObject<ObservableCollection<ConsumableType>>(response.Content);

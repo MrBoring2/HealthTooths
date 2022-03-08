@@ -47,6 +47,7 @@ namespace HealthyTeeth.Views
         public DoctorWindow()
         {
             InitializeFields();
+
         }
 
         /// <summary>
@@ -59,7 +60,8 @@ namespace HealthyTeeth.Views
             //Измените это для отображения количетсва элементов на странице
             ItemsPerPage = 20;
             LoadRecords();
-
+            DataContext = this;
+       
         }
 
         #region Properties
@@ -75,7 +77,7 @@ namespace HealthyTeeth.Views
                 OnPropertyChanged();
             }
         }
-
+        public ObservableCollection<int> DisplayedPages => Paginator.DisplayedPagesNumbers ?? (new ObservableCollection<int>());
         /// <summary>
         /// Список отображаемых записей
         /// </summary>
@@ -212,7 +214,8 @@ namespace HealthyTeeth.Views
         /// </summary>
         private async void LoadRecords()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Records/getForDoctor", UserService.Instance.Employee.EmployeeId);
+            var s = UserService.Instance.Token;
+            var response = await APIService.GetRequestWithParameter("api/Records/getForDoctor", "doctorId", UserService.Instance.Employee.EmployeeId);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 //Если данные успешно загружены, то заполняем список данными и инициализируем поля и пагинатор
@@ -223,15 +226,20 @@ namespace HealthyTeeth.Views
                 Paginator = new Paginator(5, MaxPage());
                 isAscending = true;
                 isDescending = false;
-
+                RefreshRecords();
                 UserService.Instance.HubConnection.On<string>("UpdateRecords", (records) =>
                 {
                     Records = JsonConvert.DeserializeObject<ObservableCollection<Record>>(records);
                     RefreshRecords();
                 });
+                OnPropertyChanged(nameof(StartDate));
+                OnPropertyChanged(nameof(EndDate));
+                OnPropertyChanged(nameof(IsAscending));
+                OnPropertyChanged(nameof(IsDescending));
+
                 InitializeComponent();
-                DataContext = this;
             }
+          
         }
 
         /// <summary>
@@ -275,7 +283,7 @@ namespace HealthyTeeth.Views
             DisplayedRecords = new ObservableCollection<Record>(list);
             //Обновляем пагинатор
             Paginator.RefreshPages(MaxPage() == 0 ? 1 : MaxPage());
-
+            OnPropertyChanged(nameof(DisplayedPages));
             //Если после фильтрации у нас количество элементов 0, то выводим Пусто
             if (DisplayedRecords.Count <= 0)
             {
@@ -401,9 +409,9 @@ namespace HealthyTeeth.Views
             if (SelectedRecord != null)
             {
                 var visitWindow = new VisitWindow(SelectedRecord);
-                if(visitWindow.ShowDialog() == true)
+                if (visitWindow.ShowDialog() == true)
                 {
-                    var response = await UserService.Instance.apiService.SendPostVisitRequest("api/ClientsVisits", visitWindow.Visit, visitWindow.SelectedStorage.StorageId);
+                    var response = await APIService.PostRequestWithParameter("api/ClientsVisits", "storageId", visitWindow.SelectedStorage.StorageId, visitWindow.Visit);
                     if (response.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         CustomMessageBox.Show("Посещение успешно оформлено!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -439,7 +447,7 @@ namespace HealthyTeeth.Views
                 if (result == MessageBoxResult.Yes)
                 {
                     //Если да, то отправляем запрос на сервер для удаления записи по Id
-                    var response = await UserService.Instance.apiService.SendDeleteRequest("api/Records", SelectedRecord.RecordId, UserService.Instance.HubConnection.ConnectionId);
+                    var response = await APIService.DeleteRequest("api/Records", SelectedRecord.RecordId);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show("Запись успешно удалена!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);

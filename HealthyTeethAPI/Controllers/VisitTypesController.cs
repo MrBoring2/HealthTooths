@@ -9,11 +9,13 @@ using HealthyTeethAPI.Data;
 using HealthyToothsModels;
 using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VisitTypesController : ControllerBase
     {
       

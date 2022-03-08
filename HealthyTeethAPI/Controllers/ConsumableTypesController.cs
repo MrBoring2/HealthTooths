@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HealthyTeethAPI.Data;
 using HealthyToothsModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ConsumableTypesController : ControllerBase
     {
         private readonly HealphyTeethContext _context;

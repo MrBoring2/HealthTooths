@@ -187,7 +187,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadRoles()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Roles");
+            var response = await APIService.GetRequest("api/Roles");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Roles = new ObservableCollection<string> { "Все" };
@@ -206,7 +206,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadEmployees()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Employees");
+            var response = await APIService.GetRequest("api/Employees");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 //var data = response.Content;
@@ -331,7 +331,7 @@ namespace HealthyTeeth.Views
                     doctor.PassportSeries = employee.PassportSeries;
                     doctor.PhoneNumber = employee.PhoneNumber;
                     doctor.RoleId = employee.RoleId;
-                    response = (RestResponse)await UserService.Instance.apiService.SendPostEmployeeRequest("api/Employees", doctor);
+                    response = (RestResponse)await APIService.PostEmployeeRequest("api/Employees", doctor);
                 }
                 else if(employee.RoleId == 3)
                 {
@@ -344,7 +344,7 @@ namespace HealthyTeeth.Views
                     admin.PassportSeries = employee.PassportSeries;
                     admin.PhoneNumber = employee.PhoneNumber;
                     admin.RoleId = employee.RoleId;
-                    response = (RestResponse)await UserService.Instance.apiService.SendPostEmployeeRequest("api/Employees", admin);
+                    response = (RestResponse)await APIService.PostEmployeeRequest("api/Employees", admin);
                 }
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
@@ -415,7 +415,7 @@ namespace HealthyTeeth.Views
                 var employeeWindow = new EmployeeWindow(SelectedEmployee);
                 if (employeeWindow.ShowDialog() == true)
                 {
-                    var response = await UserService.Instance.apiService.SendPutRequest("api/Employees", employeeWindow.Employee.EmployeeId, employeeWindow.Employee);
+                    var response = await APIService.PutEmployeeRequest("api/Employees", employeeWindow.Employee.EmployeeId, employeeWindow.Employee);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show($"Сотрудник {employeeWindow.FullName} успешно изменён!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -443,7 +443,7 @@ namespace HealthyTeeth.Views
                 var result = CustomMessageBox.Show("Вы точно хотите удалить этого сотрудника?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    var response = await UserService.Instance.apiService.SendDeleteRequest("api/Employees", SelectedEmployee.EmployeeId);
+                    var response = await APIService.DeleteRequest("api/Employees", SelectedEmployee.EmployeeId);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show($"Сотрудник успешно удалён!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);

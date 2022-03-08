@@ -34,12 +34,13 @@ namespace HealthyTeeth.Services
         public int SelectedPageNumber
         {
             get { return selectedPageNumber; }
-            set { selectedPageNumber = value; OnPropertyChanged(); }
+            set { selectedPageNumber = value <= 0 ? 1 : value; OnPropertyChanged(); }
         }
         private void LoadPages(int maxPage)
         {
             PagesNumbers = new ObservableCollection<int>();
-            for (int i = 0; i < maxPage; i++)
+            var max = maxPage <= 0 ? 1 : maxPage;
+            for (int i = 0; i < max; i++)
             {
                 PagesNumbers.Add(i + 1);
             }

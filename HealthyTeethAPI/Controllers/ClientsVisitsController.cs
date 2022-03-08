@@ -10,11 +10,14 @@ using HealthyToothsModels;
 using Microsoft.AspNetCore.SignalR;
 using HealthyTeethAPI.Hubs;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using HealthyTeethAPI.Helpers;
 
 namespace HealthyTeethAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientsVisitsController : ControllerBase
     {
         private readonly IHubContext<MainHub> _hubContext;
@@ -118,8 +121,8 @@ namespace HealthyTeethAPI.Controllers
             _context.ClientsVisits.Add(clientsVisit);
 
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("UpdateRecored", JsonConvert.SerializeObject(_context.Records.Include(p=>p.Client), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            await _hubContext.Clients.All.SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            await _hubContext.Clients.Group(SignalRGroups.doctors_group).SendAsync("UpdateRecored", JsonConvert.SerializeObject(_context.Records.Include(p=>p.Client), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            await _hubContext.Clients.Group(SignalRGroups.doctors_group).SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
             return CreatedAtAction("GetClientsVisit", new { id = clientsVisit.ClientVisitId }, clientsVisit);
         }

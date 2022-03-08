@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HealthyTeeth.Views"
         xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="Здоровые зуюы | Записать заявку" Height="598" Width="605.01" Icon="/HealthyTeeth;component/Resources/logo.ico">
     <Grid Background="LightBlue">
         <material:Card Margin="20,20,20,60">
@@ -45,7 +45,7 @@
                 <StackPanel Grid.Row="4">
                     <TextBlock Text="Время заявки" Margin="10" FontSize="16"/>
                     <Grid>
-                        <material:TimePicker SelectedTime="{Binding RecordDate}" material:HintAssist.Hint="Выберите время" Margin="10,0,10,0" FontSize="14"/>
+                        <material:TimePicker SelectedTime="{Binding RecordDate, StringFormat=hh\\:mm}" SelectedTimeFormat="Long" material:HintAssist.Hint="Выберите время" Margin="10,0,10,0" FontSize="14"/>
                     </Grid>
                 </StackPanel>
             </Grid>

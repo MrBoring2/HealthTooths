@@ -145,7 +145,7 @@ namespace HealthyTeeth.Views
 
         private async void LoadConsumables()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Consumables");
+            var response = await APIService.GetRequest("api/Consumables");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
 
@@ -157,7 +157,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadStorages()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Storages");
+            var response = await APIService.GetRequest("api/Storages");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Storages = JsonConvert.DeserializeObject<ObservableCollection<Storage>>(response.Content);
@@ -166,7 +166,7 @@ namespace HealthyTeeth.Views
         }
         private async void LoadTypes()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/VisitTypes");
+            var response = await APIService.GetRequest("api/VisitTypes");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 VisitTypes = JsonConvert.DeserializeObject<ObservableCollection<VisitType>>(response.Content);

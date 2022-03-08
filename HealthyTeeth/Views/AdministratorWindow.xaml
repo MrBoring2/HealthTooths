@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HealthyTeeth.Views"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
         Title="Здоровые зубы | Администратор" Height="393" Width="527" Icon="/HealthyTeeth;component/Resources/logo.ico">

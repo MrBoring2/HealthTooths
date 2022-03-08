@@ -286,3 +286,4 @@ C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\HealthyTooth
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\System.Text.Json.dll
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\obj\Debug\net5.0\HealthyTeethAPI.csproj.AssemblyReference.cache
 C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\HealthyToothsModels.pdb
+C:\Users\MrBoring\GIT\HealthTooths\HealthyTeethAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

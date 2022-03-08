@@ -181,7 +181,7 @@ namespace HealthyTeeth.Views
 
         private async void LoadClients()
         {
-            var response = await UserService.Instance.apiService.SendGetRequest("api/Clients");
+            var response = await APIService.GetRequest("api/Clients");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Clients = JsonConvert.DeserializeObject<ObservableCollection<Client>>(response.Content);
@@ -288,7 +288,7 @@ namespace HealthyTeeth.Views
             var addClientWindow = new ClientWindow();
             if (addClientWindow.ShowDialog() == true)
             {
-                var response = await UserService.Instance.apiService.SendPostRequest("api/Clients", addClientWindow.Client);
+                var response = await APIService.PostRequest("api/Clients", addClientWindow.Client);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     CustomMessageBox.Show($"Клиент {addClientWindow.FullName} успешно добавлен!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -356,7 +356,7 @@ namespace HealthyTeeth.Views
                 var clientWindow = new ClientWindow(SelectedClient);
                 if (clientWindow.ShowDialog() == true)
                 {
-                    var response = await UserService.Instance.apiService.SendPutRequest("api/Clients", clientWindow.Client.ClientId, clientWindow.Client);
+                    var response = await APIService.PutRequest("api/Clients", clientWindow.Client.ClientId, clientWindow.Client);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show($"Клиент {clientWindow.FullName} успешно изменён!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -385,7 +385,7 @@ namespace HealthyTeeth.Views
                 var result = CustomMessageBox.Show("Вы точно хотите удалить этого клиента?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    var response = await UserService.Instance.apiService.SendDeleteRequest("api/Clients", SelectedClient.ClientId);
+                    var response = await APIService.DeleteRequest("api/Clients", SelectedClient.ClientId);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         CustomMessageBox.Show($"Клиент успешно удалён!", "Оповещение", MessageBoxButton.OK, MessageBoxImage.Information);

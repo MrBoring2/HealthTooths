@@ -11,60 +11,117 @@ namespace HealthyTeeth.Services
 {
     public class APIService
     {
-        public readonly string apiConnection = "http://localhost:5556/";
+        public const string apiConnection = "http://localhost:5556/";
         public APIService()
         {
 
         }
-        public async Task<IRestResponse> SendGetRequest(string requestUrl)
+        public static Task<IRestResponse> Authorize(string login, string password)
         {
-            var request = new RestRequest(requestUrl, Method.GET);
-            return await UserService.Instance.restClient.ExecuteAsync(request);
+            try
+            {
+                RestRequest request = new RestRequest($"{apiConnection}token", Method.POST);
+                request.AddJsonBody(new { login = login, password = password});
+                var response = UserService.Instance.RestClient.ExecuteAsync(request);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
-        public async Task<IRestResponse> SendGetRequest(string requestUrl, object parameter)
+        public async static Task<IRestResponse> GetRequest(string url)
         {
-            var request = new RestRequest(requestUrl, Method.GET).AddParameter("doctorId", parameter);
-            return await UserService.Instance.restClient.ExecuteAsync(request);
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequest(url, Method.GET));
+            return response;
         }
-        public async Task<IRestResponse> SendPostRequest(string requestUrl, object content)
-        { 
-            var request = new RestRequest(requestUrl, Method.POST).AddJsonBody(content);
-            return await UserService.Instance.restClient.ExecuteAsync(request);
-        }
-        public async Task<IRestResponse> SendPostVisitRequest(string requestUrl, object content, int storageId)
+        public async static Task<IRestResponse> GetRequestWithParameter(string url, string parameterName, object parameter)
         {
-            var request = new RestRequest($"{requestUrl}/{storageId}", Method.POST).AddJsonBody(content);
-            return await UserService.Instance.restClient.ExecuteAsync(request);
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequestWithParameter(url, Method.GET, parameterName, parameter));
+            return response;
         }
-        public async Task<IRestResponse> SendPostEmployeeRequest(string requestUrl, object content)
+        public static Task<IRestResponse> GetRequest(string url, int id)
         {
-            var request = new RestRequest(requestUrl, Method.POST).AddJsonBody(JsonConvert.SerializeObject(content, new JsonSerializerSettings
+            var response = UserService.Instance.RestClient.ExecuteAsync(CreateRequest(url, Method.GET, id));
+            return response;
+        }
+
+        public async static Task<IRestResponse> PostRequest(string url, object data)
+        {
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequest(url, Method.POST, data));
+            return response;
+        }
+        public async static Task<IRestResponse> PostEmployeeRequest(string url, object data)
+        {
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequestEmployee(url, Method.POST, data));
+            return response;
+        }
+        public async static Task<IRestResponse> PostRequestWithParameter(string url, string parameterName, object parameter, object body)
+        {
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequestWithParameterAndBody(url, Method.POST, parameterName, parameter, body));
+            return response;
+        }
+        public async static Task<IRestResponse> DeleteRequest(string url, int id)
+        {
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequest(url, Method.DELETE, id));
+            return response;
+        }
+        public async static Task<IRestResponse> PutRequest(string url, int id, object data)
+        {
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequest($"{url}/{id}", Method.PUT, data));
+            return response;
+        }
+        public async static Task<IRestResponse> PutEmployeeRequest(string url, int id, object data)
+        {
+            var response = await UserService.Instance.RestClient.ExecuteAsync(CreateRequestEmployee($"{url}/{id}", Method.PUT, data));
+            return response;
+        }
+        private static IRestRequest CreateRequest(string url, Method httpMethod)
+        {
+            var restReqeust = new RestRequest(url, httpMethod);
+            restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
+            return restReqeust;
+        }
+
+        private static IRestRequest CreateRequest(string url, Method httpMethod, int id)
+        {
+            var restReqeust = new RestRequest($"{url}/{id}", httpMethod);
+            restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
+            return restReqeust;
+        }
+        private static IRestRequest CreateRequestWithParameter(string url, Method httpMethod, string parameterName, object parameter)
+        {
+            var restReqeust = new RestRequest(url, httpMethod);
+            restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
+            restReqeust.AddParameter(parameterName, parameter);
+            return restReqeust;
+        }
+        private static IRestRequest CreateRequestWithParameterAndBody(string url, Method httpMethod, string parameterName, object parameter, object body)
+        {
+            var restReqeust = new RestRequest(url, httpMethod);
+            restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
+            restReqeust.AddParameter(parameterName, parameter);
+            restReqeust.AddJsonBody(body);      
+            return restReqeust;
+        }
+        private static IRestRequest CreateRequest(string url, Method httpMethod, object data)
+        {
+            var restReqeust = new RestRequest(url, httpMethod);
+            restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
+            restReqeust.AddJsonBody(data);
+            return restReqeust;
+        }
+        private static IRestRequest CreateRequestEmployee(string url, Method httpMethod, object data)
+        {
+            var restReqeust = new RestRequest(url, httpMethod);
+            restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
+            restReqeust.AddJsonBody(JsonConvert.SerializeObject(data, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects,
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             }));
-            return await UserService.Instance.restClient.ExecuteAsync(request);
-        }
-        public async Task<IRestResponse> SendPutRequest(string requestUrl, int id, object content)
-        {
-            var request = new RestRequest(requestUrl + $"/{id}", Method.PUT).AddJsonBody(JsonConvert.SerializeObject(content, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            }));
-            return await UserService.Instance.restClient.ExecuteAsync(request);
-        }
-        public async Task<IRestResponse> SendDeleteRequest(string requestUrl, int id)
-        {
-            var request = new RestRequest(requestUrl + $"/{id}", Method.DELETE);
-            return await UserService.Instance.restClient.ExecuteAsync(request);
-        }
-        public async Task<IRestResponse> SendDeleteRequest(string requestUrl, int id, string connectionId)
-        {
-            var request = new RestRequest(requestUrl + $"/{id}", Method.DELETE).AddParameter("connectionId", connectionId);
-            return await UserService.Instance.restClient.ExecuteAsync(request);
+            return restReqeust;
         }
     }
 }
