@@ -106,13 +106,13 @@ namespace HealthyTeethAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Record>> PostRecord(Record @record)
         {
-
+            record.RecordDate = DateTime.Parse(@record.DateString);
             var records = _context.Records.Where(p => p.DoctorId == record.DoctorId).ToList();
             if (records.FirstOrDefault(p => p.RecordDate == @record.RecordDate) != null)
             {
                 return BadRequest($"У доктора уже запись на {records.FirstOrDefault(p => p.RecordDate == @record.RecordDate).RecordDate}. Новая запись должна быть только через 30 минут.");
             }
-
+            
             _context.Records.Add(@record);
             await _context.SaveChangesAsync();
             var connectionId = "";

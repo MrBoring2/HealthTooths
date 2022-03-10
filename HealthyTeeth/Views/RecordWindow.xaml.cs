@@ -32,7 +32,7 @@ namespace HealthyTeeth.Views
             SelectedMinute = Minutes.FirstOrDefault();
             InitializeComponent();
             DataContext = this;
-            RecordDate = DateTime.UtcNow.Date;
+            RecordDate = DateTime.Now.Date;
 
         }
         public DateTime RecordDate
@@ -96,13 +96,13 @@ namespace HealthyTeeth.Views
         {
             if (Doctor != null && Client != null)
             {
-                if (RecordDate.Date.ToLocalTime() < DateTime.Now.Date.ToLocalTime())
+                if (RecordDate.Date < DateTime.Now.Date)
                 {
                     CustomMessageBox.Show("Дата должна быть больше или равная сегоднешнеому дню!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                if ((RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute)).Hour < DateTime.Now.Hour))
+                if (RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute)).Hour < DateTime.Now.Hour || (RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute)).Hour == DateTime.Now.Hour && (RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute)).Minute < DateTime.Now.Minute)))
                 {
                     CustomMessageBox.Show("Время должно быть больше или равное текущему времени!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -110,8 +110,8 @@ namespace HealthyTeeth.Views
                 var record = new Record
                 {
                     ClientId = Client.ClientId,
-                    DoctorId = Doctor.EmployeeId,
-                    RecordDate = RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute))
+                    DoctorId = Doctor.EmployeeId,                   
+                    DateString = RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute)).ToString(),
                 };
 
                 var response = await APIService.PostRequest("api/Records", record);
@@ -122,7 +122,7 @@ namespace HealthyTeeth.Views
                     Doctor = null;
                     ClientFullName = string.Empty;
                     DoctorFullName = string.Empty;
-                    RecordDate = DateTime.UtcNow.Date;
+                    RecordDate = DateTime.Now.Date;
                 }
                 else
                 {
