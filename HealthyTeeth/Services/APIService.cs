@@ -98,7 +98,7 @@ namespace HealthyTeeth.Services
         }
         private static IRestRequest CreateRequestWithParameterAndBody(string url, Method httpMethod, string parameterName, object parameter, object body)
         {
-            var restReqeust = new RestRequest(url, httpMethod);
+            var restReqeust = new RestRequest($"{url}/{parameter}", httpMethod);
             restReqeust.AddHeader("Authorization", "Bearer " + UserService.Instance.Token);
             restReqeust.AddParameter(parameterName, parameter);
             restReqeust.AddJsonBody(body);      

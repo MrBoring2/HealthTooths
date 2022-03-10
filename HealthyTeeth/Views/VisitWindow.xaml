@@ -48,7 +48,7 @@
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="100*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="CreateVisit"  Margin="5,9" Content="Оформить посещение" Foreground="White" Grid.Column="0" Click="CreateVisit_Click"/>
+                    <Button x:Name="CreateVisit"  Margin="5,9" Content="Оформить посещение" Foreground="White" Grid.Column="0" Click="CreateVisit_Click" Cursor="Hand"/>
                     <Button x:Name="Cancel" Margin="5,9" Content="Отмена" Foreground="White" Grid.Column="1" Click="Cancel_Click"/>
                 </Grid>
             </Grid>

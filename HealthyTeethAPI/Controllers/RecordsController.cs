@@ -108,18 +108,19 @@ namespace HealthyTeethAPI.Controllers
         {
 
             var records = _context.Records.Where(p => p.DoctorId == record.DoctorId).ToList();
-            if (records.FirstOrDefault(p => p.RecordDate <= @record.RecordDate + new TimeSpan(0, 20, 0) && p.) != null)
+            if (records.FirstOrDefault(p => p.RecordDate == @record.RecordDate) != null)
             {
-                return BadRequest("В этот период уже есть запись. Сеанс длится не менее 20 минут.");
+                return BadRequest($"У доктора уже запись на {records.FirstOrDefault(p => p.RecordDate == @record.RecordDate).RecordDate}. Новая запись должна быть только через 30 минут.");
             }
 
             _context.Records.Add(@record);
             await _context.SaveChangesAsync();
             var connectionId = "";
-            MainHub.ConnectedUsers.TryGetValue(_context.Employees.FirstOrDefault(p => p.EmployeeId == @record.DoctorId).Login, out connectionId);
-            var list = await _context.Records.Include(p => p.Client).Where(p => p.DoctorId == record.DoctorId).ToListAsync();
-            await _hubContext.Clients.Client(connectionId).SendAsync("UpdateRecords", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-
+            if (MainHub.ConnectedUsers.TryGetValue(_context.Employees.FirstOrDefault(p => p.EmployeeId == @record.DoctorId).Login, out connectionId))
+            {
+                var list = await _context.Records.Include(p => p.Client).Where(p => p.DoctorId == record.DoctorId).Include(p => p.Client).ToListAsync();
+                await _hubContext.Clients.Client(connectionId).SendAsync("UpdateRecords", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            }
             return CreatedAtAction("GetRecord", new { id = @record.RecordId }, @record);
         }
 
@@ -128,14 +129,15 @@ namespace HealthyTeethAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRecord(int id, string connectionId)
+        public async Task<IActionResult> DeleteRecord(int id)
         {
             var @record = await _context.Records.FindAsync(id);
             if (@record == null)
             {
                 return NotFound();
             }
-
+            var connectionId = "";
+            MainHub.ConnectedUsers.TryGetValue(HttpContext.User.Identity.Name, out connectionId);
             _context.Records.Remove(@record);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.Client(connectionId).SendAsync("UpdateRecords", JsonConvert.SerializeObject(_context.Records.Include(p => p.Client).Include(p => p.Doctor).Where(p => p.DoctorId == record.DoctorId), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));

@@ -37,6 +37,7 @@ namespace HealthyTeeth.Views
         private Visibility selectVisibility;
         private Visibility emptyVisibility;
         private string selectedGender;
+        private bool isModal;
         public EmployeesListWindow(bool isModal)
         {
             InitializeFields(isModal);
@@ -167,6 +168,7 @@ namespace HealthyTeeth.Views
         {
             search = "";
             EmptyVisibility = Visibility.Hidden;
+            this.isModal = isModal;
             if (!isModal)
             {
                 SelectVisibility = Visibility.Hidden;
@@ -482,9 +484,16 @@ namespace HealthyTeeth.Views
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            var administratorWindow = new AdministratorWindow();
-            administratorWindow.Show();
-            this.Close();
+            if (!isModal)
+            {
+                var administratorWindow = new AdministratorWindow();
+                administratorWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                DialogResult = false;
+            }
         }
 
         private void Select_Click(object sender, RoutedEventArgs e)

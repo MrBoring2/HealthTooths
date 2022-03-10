@@ -97,7 +97,7 @@ namespace HealthyTeethAPI.Controllers
                 }
                 else
                 {
-                    if (consumable.Amount - item.Amount <= 0)
+                    if (consumable.Amount - item.Amount < 0)
                     {
                         return BadRequest("Не хватает расходников на складе!");
                     }
@@ -108,21 +108,28 @@ namespace HealthyTeethAPI.Controllers
                 }
             }
 
-            var list = _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToList();
-            foreach (var item in list)
-            {
-                foreach (var storageItem in item.ConsumablesInStorages)
-                {
-                    _context.Entry(storageItem).Reference(p => p.Storage).Load();
-                }
-            }
 
             _context.Records.Remove(_context.Records.FirstOrDefault(p => p.ClientId == clientsVisit.ClientId && p.DoctorId == clientsVisit.DoctorId && p.RecordDate == clientsVisit.VisitDate));
             _context.ClientsVisits.Add(clientsVisit);
-
+            string connectionId = "";
+            MainHub.ConnectedUsers.TryGetValue(_context.Employees.FirstOrDefault(p => p.EmployeeId == clientsVisit.DoctorId).Login, out connectionId);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.Group(SignalRGroups.doctors_group).SendAsync("UpdateRecored", JsonConvert.SerializeObject(_context.Records.Include(p=>p.Client), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            await _hubContext.Clients.Group(SignalRGroups.doctors_group).SendAsync("UpdateConsumables", JsonConvert.SerializeObject(list, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+            await Task.Run(async () =>
+            {
+                var consumables = _context.Consumables.Include(p => p.ConsumableType).Include(p => p.ConsumablesInStorages).ToList();
+                var records = await _context.Records.Include(p => p.Client).Where(p => p.DoctorId == clientsVisit.DoctorId).Include(p => p.Client).ToListAsync();
+                foreach (var item in consumables)
+                {
+                    foreach (var storageItem in item.ConsumablesInStorages)
+                    {
+                        _context.Entry(storageItem).Reference(p => p.Storage).Load();
+                    }
+                    await _hubContext.Clients.Client(connectionId).SendAsync("UpdateRecords", JsonConvert.SerializeObject(records, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                    await _hubContext.Clients.Group(SignalRGroups.doctors_group).SendAsync("UpdateConsumables", JsonConvert.SerializeObject(consumables, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                    await _hubContext.Clients.Group(SignalRGroups.admins_group).SendAsync("UpdateConsumables", JsonConvert.SerializeObject(consumables, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                }
+            });
 
             return CreatedAtAction("GetClientsVisit", new { id = clientsVisit.ClientVisitId }, clientsVisit);
         }

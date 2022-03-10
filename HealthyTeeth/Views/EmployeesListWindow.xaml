@@ -109,7 +109,7 @@
                 <ComboBox Margin="5,55" Grid.Column="3" SelectedItem="{Binding SelectedRole}" material:HintAssist.Hint="Выберите роль" FontSize="16" ItemsSource="{Binding Roles}" Grid.ColumnSpan="1"/>
             </Grid>
         </material:Card>
-        <Button x:Name="Select" Grid.Row="3" Margin="189,8,0,10" Visibility="{Binding SelectVisibility}" Foreground="White" HorizontalAlignment="Left" Width="165" Content="Выбрать доктора" Click="Select_Click"  Height="Auto"/>
+        <Button x:Name="Select" Grid.Row="3" Margin="189,8,0,10" Visibility="{Binding SelectVisibility}" Foreground="White" HorizontalAlignment="Left" Width="165" Content="Выбрать доктора" Click="Select_Click"  Height="Auto" Cursor="Hand"/>
         <Button x:Name="AddNewEmployee" Grid.Row="3" Margin="0,8,20,10" Foreground="White" HorizontalAlignment="Right" Width="182" Content="Добавить сотрудника" Click="AddNewEmployee_Click"  Height="Auto"/>
         <Button x:Name="EditEmployee" Grid.Row="3" Margin="0,8,207,10" Foreground="White" HorizontalAlignment="Right" Width="214" Content="Редактировать сотрудника" Click="EditEmployee_Click"  Height="Auto"/>
         <Button x:Name="RemoveEmployee" Grid.Row="3" Margin="0,8,426,10" Foreground="White" HorizontalAlignment="Right" Width="184" Content="Удалить сотрудника" Click="RemoveEmployee_Click"  Height="Auto"/>

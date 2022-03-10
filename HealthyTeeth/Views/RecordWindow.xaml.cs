@@ -3,16 +3,7 @@ using HealthyToothsModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HealthyTeeth.Views
 {
@@ -24,12 +15,25 @@ namespace HealthyTeeth.Views
         private string clientFullName;
         private string doctorFullName;
         private DateTime recordDate;
+        private int selectedHour;
+        private string selectedMinute;
 
         public RecordWindow()
         {
+            Hours = new List<int>
+            {
+                01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,00
+            };
+            Minutes = new List<string>
+            {
+                "00", "30"
+            };
+            SelectedHour = Hours.FirstOrDefault(p => p == DateTime.Now.Hour);
+            SelectedMinute = Minutes.FirstOrDefault();
             InitializeComponent();
             DataContext = this;
-            RecordDate = DateTime.Now;
+            RecordDate = DateTime.UtcNow.Date;
+
         }
         public DateTime RecordDate
         {
@@ -40,6 +44,8 @@ namespace HealthyTeeth.Views
                 OnPropertyChanged();
             }
         }
+        public int SelectedHour { get => selectedHour; set { selectedHour = value; OnPropertyChanged(); } }
+        public string SelectedMinute { get => selectedMinute; set { selectedMinute = value; OnPropertyChanged(); } }
         public string ClientFullName
         {
             get => clientFullName;
@@ -60,7 +66,8 @@ namespace HealthyTeeth.Views
         }
         public Client Client { get; set; }
         public Doctor Doctor { get; set; }
-
+        public List<int> Hours { get; set; }
+        public List<string> Minutes { get; set; }
         private void SelectClient_Click(object sender, RoutedEventArgs e)
         {
             var clientsListWindow = new ClientsListWindow(true);
@@ -89,13 +96,13 @@ namespace HealthyTeeth.Views
         {
             if (Doctor != null && Client != null)
             {
-                if (RecordDate.Date.ToLocalTime() <= DateTime.Now.Date.ToLocalTime())
+                if (RecordDate.Date.ToLocalTime() < DateTime.Now.Date.ToLocalTime())
                 {
                     CustomMessageBox.Show("Дата должна быть больше или равная сегоднешнеому дню!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                if (RecordDate.ToLocalTime().Date == DateTime.Now && (RecordDate.Hour > DateTime.Now.Hour))
+                if ((RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute)).Hour < DateTime.Now.Hour))
                 {
                     CustomMessageBox.Show("Время должно быть больше или равное текущему времени!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -104,7 +111,7 @@ namespace HealthyTeeth.Views
                 {
                     ClientId = Client.ClientId,
                     DoctorId = Doctor.EmployeeId,
-                    RecordDate = RecordDate.ToLocalTime()
+                    RecordDate = RecordDate.AddHours(SelectedHour).AddMinutes(Convert.ToInt32(SelectedMinute))
                 };
 
                 var response = await APIService.PostRequest("api/Records", record);
@@ -115,7 +122,7 @@ namespace HealthyTeeth.Views
                     Doctor = null;
                     ClientFullName = string.Empty;
                     DoctorFullName = string.Empty;
-                    RecordDate = DateTime.Now.ToLocalTime();
+                    RecordDate = DateTime.UtcNow.Date;
                 }
                 else
                 {

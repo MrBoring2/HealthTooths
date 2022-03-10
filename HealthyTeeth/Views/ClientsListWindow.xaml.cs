@@ -36,6 +36,7 @@ namespace HealthyTeeth.Views
         private Visibility emptyVisibility;
         private Visibility selectVisibility;
         private string selectedGender;
+        private bool isModal;
         public ClientsListWindow(bool isModal)
         {
             InitializeFields(isModal);
@@ -424,9 +425,16 @@ namespace HealthyTeeth.Views
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            var administratorWindow = new AdministratorWindow();
-            administratorWindow.Show();
-            this.Close();
+            if (!isModal)
+            {
+                var administratorWindow = new AdministratorWindow();
+                administratorWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                DialogResult = false;
+            }
         }
     }
 }

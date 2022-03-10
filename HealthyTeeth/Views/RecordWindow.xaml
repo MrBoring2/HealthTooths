@@ -45,7 +45,11 @@
                 <StackPanel Grid.Row="4">
                     <TextBlock Text="Время заявки" Margin="10" FontSize="16"/>
                     <Grid>
-                        <material:TimePicker SelectedTime="{Binding RecordDate, StringFormat=hh\\:mm}" SelectedTimeFormat="Long" material:HintAssist.Hint="Выберите время" Margin="10,0,10,0" FontSize="14"/>
+                        <StackPanel Margin="10,0" Orientation="Horizontal">
+                            <ComboBox FontSize="16"  material:HintAssist.Hint="Час" ItemsSource="{Binding Hours}" SelectedItem="{Binding SelectedHour}" Margin="0,5" material:HintAssist.IsFloating="True"/>
+                            <ComboBox FontSize="16" material:HintAssist.Hint="Минуты" Margin="5" ItemsSource="{Binding Minutes}" SelectedItem="{Binding SelectedMinute}" material:HintAssist.IsFloating="True"/>
+                        </StackPanel>
+                        <!--<material:TimePicker SelectedTime="{Binding RecordDate, StringFormat=hh\\:mm}" SelectedTimeFormat="Long" material:HintAssist.Hint="Выберите время" Margin="10,0,10,0" FontSize="14"/>-->
                     </Grid>
                 </StackPanel>
             </Grid>
