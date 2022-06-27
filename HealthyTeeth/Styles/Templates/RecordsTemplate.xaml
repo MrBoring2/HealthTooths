@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="records" DataType="{x:Type ListViewItem}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding ClientFullName}" Grid.Column="0" FontSize="16" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding Date}" Grid.Column="1" FontSize="16" HorizontalAlignment="Center"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="buttonTemplate" DataType="{x:Type Button}">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding }"/>
+    </DataTemplate>
+</ResourceDictionary>

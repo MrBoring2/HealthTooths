@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f13efc68-a38b-45fd-8ee4-72fde278d891": {
+      "ProjectGuid": "f13efc68-a38b-45fd-8ee4-72fde278d891",
+      "DisplayName": "HealthyTeethAPI",
+      "ColorIndex": 0
+    },
+    "87efa19e-8d43-405b-95b3-ab086f74a014": {
+      "ProjectGuid": "87efa19e-8d43-405b-95b3-ab086f74a014",
+      "DisplayName": "HealthyToothsModels",
+      "ColorIndex": 1
+    },
+    "c6d3e101-8f26-40d2-b5ef-31f068065ff7": {
+      "ProjectGuid": "c6d3e101-8f26-40d2-b5ef-31f068065ff7",
+      "DisplayName": "HealthyTeeth",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

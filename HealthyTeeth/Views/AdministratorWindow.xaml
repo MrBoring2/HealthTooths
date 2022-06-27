@@ -1,0 +1,24 @@
+﻿<local:BaseWindow x:Class="HealthyTeeth.Views.AdministratorWindow"
+        ResizeMode="NoResize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HealthyTeeth.Views"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
+        Title="Здоровые зубы | Администратор" Height="393" Width="527" Icon="/HealthyTeeth;component/Resources/logo.ico">
+    <Grid Background="LightBlue">
+        <material:Card Margin="20">
+            <Grid>
+                <Button x:Name="ClientsControl" Content="Управление клиентами" HorizontalAlignment="Left" Foreground="White" Margin="10,55,0,0" VerticalAlignment="Top" Width="213" Click="ClientsControl_Click"/>
+                <Button x:Name="EmployeesControl" Content="Управление сотрудниками" HorizontalAlignment="Right" Foreground="White" Margin="245,55,10,0" VerticalAlignment="Top" Width="224" Click="EmployeesControl_Click"/>
+                <Button x:Name="ConsumablesControl" Content="Управление расходниками" HorizontalAlignment="Left" Foreground="White" Margin="10,145,0,0" VerticalAlignment="Top" Width="213" Click="ConsumablesControl_Click"/>
+                <Button x:Name="OrderConsumables" Content="Заказать расходники" HorizontalAlignment="Right" Foreground="White" Margin="245,145,10,0" VerticalAlignment="Top" Width="224" Click="OrderConsumables_Click"/>
+                <Button x:Name="Exit" Content="Выход" HorizontalAlignment="Center" Foreground="White" Margin="247,224,10,0" VerticalAlignment="Top" Width="224" Click="Exit_Click"/>
+                <Button x:Name="CreateRecord" Content="Записать заявку" HorizontalAlignment="Left" Foreground="White" Margin="10,224,0,0" VerticalAlignment="Top" Width="213" Click="CreateRecord_Click"/>
+            </Grid>
+        </material:Card>
+    </Grid>
+</local:BaseWindow>
